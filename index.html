@@ -390,7 +390,26 @@ button:hover {
 </style>
 </head>
 <body>
+ <h1 class="title">WELCOME!</h1>
+      <p id="currentTime"></p>
+      <script src="script.js"></script>
+  </body>
+</html>
+<video autoplay muted loop id="bg-video">
+    <source src="https://v1.pinimg.com/videos/mc/720p/29/df/33/29df3353634a0d9bb5b72206c3ec9d31.mp4" type="video/mp4">
+</video>
 
+<style>
+#bg-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+    object-fit: cover;
+}
+</style>
 <div class="container">
     <div class="header-box" style="position: relative;">
         <div class="lights"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
