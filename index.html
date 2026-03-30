@@ -291,6 +291,9 @@ button:hover {
 .market-row-value {
     color: #fde047;
     font-weight: 600;
+    word-break: break-word;
+    text-align: right;
+    max-width: 65%;
 }
 
 .single-card {
@@ -341,6 +344,7 @@ button:hover {
     color: #fde047;
     font-size: 1.1rem;
     font-weight: bold;
+    word-break: break-word;
 }
 
 .number-badge {
@@ -386,20 +390,9 @@ button:hover {
     .control-panel { flex-direction: column; align-items: stretch; }
     .markets-grid { grid-template-columns: 1fr; }
     .rainbow-text { font-size: 28px; }
+    .market-row-value { max-width: 70%; }
 }
-</style>
-</head>
-<body>
- <h1 class="title">WELCOME!</h1>
-      <p id="currentTime"></p>
-      <script src="script.js"></script>
-  </body>
-</html>
-<video autoplay muted loop id="bg-video">
-    <source src="https://v1.pinimg.com/videos/mc/720p/29/df/33/29df3353634a0d9bb5b72206c3ec9d31.mp4" type="video/mp4">
-</video>
 
-<style>
 #bg-video {
     position: fixed;
     right: 0;
@@ -410,6 +403,12 @@ button:hover {
     object-fit: cover;
 }
 </style>
+</head>
+<body>
+<video autoplay muted loop id="bg-video">
+    <source src="https://v1.pinimg.com/videos/mc/720p/29/df/33/29df3353634a0d9bb5b72206c3ec9d31.mp4" type="video/mp4">
+</video>
+
 <div class="container">
     <div class="header-box" style="position: relative;">
         <div class="lights"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
@@ -439,7 +438,7 @@ button:hover {
 
     <div id="searchStats" class="search-stats"></div>
     <div id="contentArea"></div>
-    <div class="footer">⚠️ BIASAKAN UPS - UTAMAKAN PREDIKSI SENDIRI | 53 Pasaran Lengkap</div>
+    <div class="footer">⚠️ BIASAKAN UPS - UTAMAKAN PREDIKSI SENDIRI | 53 Pasaran Lengkap | Khusus TOTO MACAU 5D SORE & MALAM prediksi spesial</div>
 </div>
 
 <script>
@@ -458,20 +457,47 @@ const PASARAN = [
 
 const SHIO = ["TIKUS", "KERBAU", "MACAN", "KELINCI", "NAGA", "ULAR", "KUDA", "KAMBING", "MONYET", "AYAM", "ANJING", "BABI"];
 
-// Seed harian
+// ==================== PREDIKSI KHUSUS TOTO MACAU 5D (STATIS) ====================
+const PREDIKSI_KHUSUS = {
+    "TOTO MACAU 5D SORE": {
+        bbfs: "7574271",
+        angkaMain: "42978",
+        angka5d: ["75069", "68200"],
+        angka4d: ["6718", "2952", "6804", "1255"],
+        angka3d: ["732", "501", "492", "312"],
+        angka2d: ["10", "45", "21", "11", "66", "67", "15", "19", "45", "37"],
+        colokBebas: "3/0",
+        colokBebas2D: "84/75/16",
+        colokShio: "KELINCI/TIKUS/BABI",
+        investTwin: "11/44/22"
+    },
+    "TOTO MACAU 5D MALAM": {
+        bbfs: "6616479",
+        angkaMain: "71548",
+        angka5d: ["60356", "55322"],
+        angka4d: ["7172", "2345", "1948", "3806"],
+        angka3d: ["526", "661", "605", "426"],
+        angka2d: ["58", "89", "54", "62", "74", "75", "18", "12", "17", "37"],
+        colokBebas: "4/4",
+        colokBebas2D: "33/96/32",
+        colokShio: "KUDA/KELINCI/KAMBING",
+        investTwin: "22/77/44"
+    }
+};
+
+// Seed harian untuk generate random (pasaran lain)
 function getSeed() {
     const t = new Date();
     return t.getFullYear() * 366 + t.getMonth() * 32 + t.getDate();
 }
 
-// Generate angka random berdasarkan seed
 function getNum(seed, max, offset) {
     const val = ((seed + offset) * 9301 + 49297) % 233280;
     return Math.floor(val / 233280 * max);
 }
 
-// Generate prediksi untuk satu pasaran
-function getPrediksi(pasaran) {
+// Generate prediksi untuk pasaran biasa (random)
+function getPrediksiRandom(pasaran) {
     const dailySeed = getSeed();
     let hash = 0;
     for (let i = 0; i < pasaran.length; i++) {
@@ -481,7 +507,6 @@ function getPrediksi(pasaran) {
     hash = Math.abs(hash);
     const baseSeed = dailySeed + hash;
     
-    // BBFS 7 digit
     let bbfsSet = new Set();
     for (let i = 0; i < 30; i++) {
         bbfsSet.add(getNum(baseSeed, 10, i * 2 + 100));
@@ -491,26 +516,22 @@ function getPrediksi(pasaran) {
     let bbfs = Array.from(bbfsSet).sort((a,b)=>a-b).join('');
     if (bbfs.length < 7) bbfs = bbfs.padEnd(7, '0');
     
-    // Angka Main 5 digit
     let mainSet = new Set();
     for (let i = 0; i < 20; i++) mainSet.add(getNum(baseSeed, 10, i + 300));
     let mainArr = Array.from(mainSet).slice(0,5);
     while (mainArr.length < 5) mainArr.push(getNum(baseSeed, 10, mainArr.length + 400));
     let angkaMain = mainArr.join('');
     
-    // 4D
     let fourD = [];
     for (let i = 0; i < 4; i++) {
         fourD.push(`${getNum(baseSeed, 10, i*5+500)}${getNum(baseSeed, 10, i*5+501)}${getNum(baseSeed, 10, i*5+502)}${getNum(baseSeed, 10, i*5+503)}`);
     }
     
-    // 3D
     let threeD = [];
     for (let i = 0; i < 4; i++) {
         threeD.push(`${getNum(baseSeed, 10, i*6+600)}${getNum(baseSeed, 10, i*6+601)}${getNum(baseSeed, 10, i*6+602)}`);
     }
     
-    // 2D
     let twoD = [];
     for (let i = 0; i < 10; i++) {
         twoD.push(`${getNum(baseSeed, 10, i*7+700)}${getNum(baseSeed, 10, i*7+701)}`);
@@ -533,10 +554,30 @@ function getPrediksi(pasaran) {
     let t3 = getNum(baseSeed, 10, 1102);
     let twin = `${t1}/${t2}${t2}/${t3}${t3}`;
     
-    return { bbfs, angkaMain, fourD, threeD, twoD, colok, colok2d, shio, twin };
+    return { bbfs, angkaMain, fourD, threeD, twoD, colok, colok2d, shio, twin, isKhusus: false };
 }
 
-// Format tanggal
+// Get prediksi berdasarkan pasaran (khusus atau random)
+function getPrediksi(pasaran) {
+    if (PREDIKSI_KHUSUS[pasaran]) {
+        const k = PREDIKSI_KHUSUS[pasaran];
+        return {
+            bbfs: k.bbfs,
+            angkaMain: k.angkaMain,
+            fourD: k.angka4d,
+            threeD: k.angka3d,
+            twoD: k.angka2d,
+            colok: k.colokBebas,
+            colok2d: k.colokBebas2D,
+            shio: k.colokShio,
+            twin: k.investTwin,
+            angka5d: k.angka5d,
+            isKhusus: true
+        };
+    }
+    return getPrediksiRandom(pasaran);
+}
+
 function getTanggal() {
     const now = new Date();
     const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -549,25 +590,17 @@ function getJam() {
     return `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
 }
 
-// Format teks prediksi
 function formatTeks(pasaran) {
     const p = getPrediksi(pasaran);
     const tgl = getTanggal();
-    return `Prediksi ${pasaran}
-Hari ${tgl}
-BBFS KUAT: ${p.bbfs}
-Angka Main : ${p.angkaMain}
-4D (BB): ${p.fourD.join(' ')}
-3D (BB) : ${p.threeD.join(' ')}
-2D (BB): ${p.twoD.join(' ')}
-Colok Bebas : ${p.colok}
-Colok bebas 2D : ${p.colok2d}
-Colok Shio : ${p.shio}
-Invest Twin : ${p.twin}
-Biasakan UPS - UTAMAKAN PREDIKSI SENDIRI`;
+    let text = `Prediksi ${pasaran}\nHari ${tgl}\nBBFS KUAT: ${p.bbfs}\nAngka Main : ${p.angkaMain}`;
+    if (p.isKhusus && p.angka5d) {
+        text += `\n5D  : ${p.angka5d.join(' ')}  `;
+    }
+    text += `\n4D (BB): ${p.fourD.join(' ')}\n3D (BB) : ${p.threeD.join(' ')}\n2D (BB): ${p.twoD.join(' ')}\nColok Bebas : ${p.colok}\nColok bebas 2D : ${p.colok2d}\nColok Shio : ${p.shio}\nInvest Twin : ${p.twin}\nBiasakan UPS - UTAMAKAN PREDIKSI SENDIRI`;
+    return text;
 }
 
-// Toast
 function toast(msg) {
     let t = document.querySelector('.toast');
     if (t) t.remove();
@@ -578,7 +611,6 @@ function toast(msg) {
     setTimeout(() => t.remove(), 2500);
 }
 
-// Copy ke clipboard
 async function copy(text, msg) {
     try {
         await navigator.clipboard.writeText(text);
@@ -594,11 +626,10 @@ async function copy(text, msg) {
     }
 }
 
-// TAMPILKAN SEMUA PASARAN (ALL)
 function tampilkanSemua() {
     const stats = document.getElementById('searchStats');
     stats.style.display = 'block';
-    stats.innerHTML = `📊 Menampilkan <span>${PASARAN.length}</span> Pasaran (SEMUA PASARAN)`;
+    stats.innerHTML = `📊 Menampilkan <span>${PASARAN.length}</span> Pasaran (SEMUA PASARAN) | Khusus TOTO MACAU 5D SORE & MALAM prediksi spesial`;
     
     let html = `<div class="markets-grid">`;
     for (let i = 0; i < PASARAN.length; i++) {
@@ -612,6 +643,7 @@ function tampilkanSemua() {
             <div class="market-content">
                 <div class="market-row"><span class="market-row-label">BBFS KUAT:</span><span class="market-row-value">${p.bbfs}</span></div>
                 <div class="market-row"><span class="market-row-label">Angka Main:</span><span class="market-row-value">${p.angkaMain}</span></div>
+                ${p.isKhusus && p.angka5d ? `<div class="market-row"><span class="market-row-label">5D:</span><span class="market-row-value">${p.angka5d[0]} ${p.angka5d[1]}</span></div>` : ''}
                 <div class="market-row"><span class="market-row-label">4D:</span><span class="market-row-value">${p.fourD[0]} ${p.fourD[1]}</span></div>
                 <div class="market-row"><span class="market-row-label">3D:</span><span class="market-row-value">${p.threeD[0]} ${p.threeD[1]}</span></div>
                 <div class="market-row"><span class="market-row-label">2D Top 5:</span><span class="market-row-value">${p.twoD.slice(0,5).join(' ')}</span></div>
@@ -631,7 +663,6 @@ function tampilkanSemua() {
     });
 }
 
-// PENCARIAN
 function cariPasaran() {
     const keyword = document.getElementById('searchInput').value.trim();
     const stats = document.getElementById('searchStats');
@@ -651,11 +682,16 @@ function cariPasaran() {
     }
     
     if (hasil.length === 1) {
-        // Tampilkan detail satu pasaran
         const p = getPrediksi(hasil[0]);
         const tgl = getTanggal();
         const jam = getJam();
         stats.style.display = 'none';
+        
+        let special5DRow = '';
+        if (p.isKhusus && p.angka5d) {
+            special5DRow = `<div class="pred-item"><div class="pred-label">5D (KHUSUS)</div><div class="pred-value">${p.angka5d.join(' · ')}</div></div>`;
+        }
+        
         document.getElementById('contentArea').innerHTML = `
         <div class="single-card">
             <div class="single-header">
@@ -665,6 +701,7 @@ function cariPasaran() {
             <div class="prediction-grid">
                 <div class="pred-item"><div class="pred-label">BBFS KUAT</div><div class="pred-value">${p.bbfs}</div></div>
                 <div class="pred-item"><div class="pred-label">Angka Main</div><div class="pred-value">${p.angkaMain}</div></div>
+                ${special5DRow}
                 <div class="pred-item"><div class="pred-label">4D (BB)</div><div class="pred-value">${p.fourD.join(' · ')}</div></div>
                 <div class="pred-item"><div class="pred-label">3D (BB)</div><div class="pred-value">${p.threeD.join(' · ')}</div></div>
                 <div class="pred-item"><div class="pred-label">2D (BB)</div><div class="pred-value">${p.twoD.map(n => `<span class="number-badge">${n}</span>`).join('')}</div></div>
@@ -691,6 +728,7 @@ function cariPasaran() {
                 <div class="market-content">
                     <div class="market-row"><span class="market-row-label">BBFS KUAT:</span><span class="market-row-value">${p.bbfs}</span></div>
                     <div class="market-row"><span class="market-row-label">Angka Main:</span><span class="market-row-value">${p.angkaMain}</span></div>
+                    ${p.isKhusus && p.angka5d ? `<div class="market-row"><span class="market-row-label">5D:</span><span class="market-row-value">${p.angka5d[0]} ${p.angka5d[1]}</span></div>` : ''}
                     <div class="market-row"><span class="market-row-label">4D:</span><span class="market-row-value">${p.fourD[0]}</span></div>
                     <div class="market-row"><span class="market-row-label">3D:</span><span class="market-row-value">${p.threeD[0]}</span></div>
                     <div class="market-row"><span class="market-row-label">2D Top 5:</span><span class="market-row-value">${p.twoD.slice(0,5).join(' ')}</span></div>
@@ -710,14 +748,11 @@ function cariPasaran() {
     }
 }
 
-// Update jam
 function updateJam() {
     document.getElementById('dateTime').innerHTML = getTanggal() + ' | ' + getJam();
 }
 
-// Inisialisasi
 document.addEventListener('DOMContentLoaded', () => {
-    // Isi dropdown
     const select = document.getElementById('marketSelect');
     select.innerHTML = '<option value="">-- Pilih Pasaran --</option>';
     PASARAN.forEach(p => {
@@ -740,7 +775,6 @@ document.addEventListener('DOMContentLoaded', () => {
         tampilkanSemua();
     };
     
-    // COPY ALL - tanpa tanda ========
     document.getElementById('copyAllBtn').onclick = () => {
         let semuaTeks = '';
         for (let i = 0; i < PASARAN.length; i++) {
@@ -753,7 +787,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateJam();
     setInterval(updateJam, 1000);
     
-    // Tampilkan semua pasaran saat pertama kali load
     tampilkanSemua();
 });
 </script>
