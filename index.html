@@ -170,7 +170,7 @@ select {
     color: white;
     font-size: 14px;
     cursor: pointer;
-    min-width: 200px;
+    min-width: 220px;
 }
 
 .btn-group {
@@ -423,7 +423,7 @@ button:hover {
 
     <div class="control-panel">
         <div class="search-group">
-            <input type="text" id="searchInput" placeholder="🔎 Cari pasaran... (contoh: MACAU, SYDNEY, HONGKONG)" autocomplete="off">
+            <input type="text" id="searchInput" placeholder="🔎 Cari pasaran... (contoh: TOTOMACAU, SYDNEY, HONGKONG)" autocomplete="off">
         </div>
         <div class="select-group">
             <label>📌 PILIH PASARAN</label>
@@ -438,28 +438,28 @@ button:hover {
 
     <div id="searchStats" class="search-stats"></div>
     <div id="contentArea"></div>
-    <div class="footer">⚠️ BIASAKAN UPS - UTAMAKAN PREDIKSI SENDIRI | 53 Pasaran Lengkap | Khusus TOTO MACAU 5D SORE & MALAM prediksi spesial</div>
+    <div class="footer">⚠️ BIASAKAN UPS - UTAMAKAN PREDIKSI SENDIRI | 53 Pasaran Lengkap | Khusus TOTOMACAU 5D SORE & MALAM prediksi spesial</div>
 </div>
 
 <script>
-// ==================== 53 PASARAN LENGKAP ====================
+// ==================== 53 PASARAN LENGKAP (TANPA SPASI PADA TOTOMACAU) ====================
 const PASARAN = [
-    "TOTO MACAU PAGI", "KENTUCKY MIDDAY", "FLORIDA MIDDAY", "HUAHIN 0100", "NEW YORK MIDDAY",
+    "TOTOMACAU PAGI", "KENTUCKY MIDDAY", "FLORIDA MIDDAY", "HUAHIN 0100", "NEW YORK MIDDAY",
     "BANGKOK 0130", "CAROLINA DAY", "BRUNEI 02", "OREGON03", "OREGON06", "CALIFORNIA", "FLORIDA EVENING",
     "OREGON09", "NEW YORK EVENING", "BANGKOK 0930", "KENTUCKY EVENING", "CAROLINA EVENING", "CHELSEA11",
     "TOTOCAMBODIA", "OREGON12", "BULLSEYE", "POIPET12", "TOTOMACAU SIANG", "JAKARTA4D I", "SYDNEY",
-    "BRUNEI 14", "CHELSEA15", "TOTO MACAU 5D SORE", "POIPET15", "TOTOMACAU SORE", "HUAHIN 1630",
+    "BRUNEI 14", "CHELSEA15", "TOTOMACAU 5D SORE", "POIPET15", "TOTOMACAU SORE", "HUAHIN 1630",
     "KING KONG 4D I", "SINGAPORE", "MAGNUM4D", "CHELSEA19", "TOTOMACAU MALAM I", "POIPET19", "PCSO",
-    "KING KONG 4D II", "HUAHIN 2100", "CHELSEA21", "TOTO MACAU 5D MALAM", "NEVADA", "BRUNEI 21",
+    "KING KONG 4D II", "HUAHIN 2100", "CHELSEA21", "TOTOMACAU 5D MALAM", "NEVADA", "BRUNEI 21",
     "TOTOMACAU MALAM II", "POIPET22", "HONGKONG", "JAKARTA4D II", "TOTOMACAU MALAM III", "TOTOMALI 1530",
     "TOTOMALI 2030", "TOTOMALI 2330", "HOKI DRAW"
 ];
 
 const SHIO = ["TIKUS", "KERBAU", "MACAN", "KELINCI", "NAGA", "ULAR", "KUDA", "KAMBING", "MONYET", "AYAM", "ANJING", "BABI"];
 
-// ==================== PREDIKSI KHUSUS TOTO MACAU 5D (STATIS) ====================
+// ==================== PREDIKSI KHUSUS TOTOMACAU 5D (STATIS) ====================
 const PREDIKSI_KHUSUS = {
-    "TOTO MACAU 5D SORE": {
+    "TOTOMACAU 5D SORE": {
         bbfs: "7574271",
         angkaMain: "42978",
         angka5d: ["75069", "68200"],
@@ -471,7 +471,7 @@ const PREDIKSI_KHUSUS = {
         colokShio: "KELINCI/TIKUS/BABI",
         investTwin: "11/44/22"
     },
-    "TOTO MACAU 5D MALAM": {
+    "TOTOMACAU 5D MALAM": {
         bbfs: "6616479",
         angkaMain: "71548",
         angka5d: ["60356", "55322"],
@@ -629,7 +629,7 @@ async function copy(text, msg) {
 function tampilkanSemua() {
     const stats = document.getElementById('searchStats');
     stats.style.display = 'block';
-    stats.innerHTML = `📊 Menampilkan <span>${PASARAN.length}</span> Pasaran (SEMUA PASARAN) | Khusus TOTO MACAU 5D SORE & MALAM prediksi spesial`;
+    stats.innerHTML = `📊 Menampilkan <span>${PASARAN.length}</span> Pasaran (SEMUA PASARAN) | Khusus TOTOMACAU 5D SORE & MALAM prediksi spesial`;
     
     let html = `<div class="markets-grid">`;
     for (let i = 0; i < PASARAN.length; i++) {
@@ -677,7 +677,7 @@ function cariPasaran() {
     if (hasil.length === 0) {
         stats.style.display = 'block';
         stats.innerHTML = `🔍 <span>0</span> pasaran ditemukan. Coba kata kunci lain.`;
-        document.getElementById('contentArea').innerHTML = `<div class="empty-search">😢 Tidak ada pasaran yang cocok dengan "<strong>${keyword}</strong>"<br><br>💡 Coba: MACAU, SYDNEY, HONGKONG, atau klik tombol TAMPILKAN ALL</div>`;
+        document.getElementById('contentArea').innerHTML = `<div class="empty-search">😢 Tidak ada pasaran yang cocok dengan "<strong>${keyword}</strong>"<br><br>💡 Coba: TOTOMACAU, SYDNEY, HONGKONG, atau klik tombol TAMPILKAN ALL</div>`;
         return;
     }
     
