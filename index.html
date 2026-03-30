@@ -26,7 +26,6 @@ body {
     z-index: 2;
 }
 
-/* ELLEN CRISTIAN HEADER DENGAN EFEK PETIR */
 .ellen-header {
     text-align: center;
     margin-bottom: 20px;
@@ -190,12 +189,125 @@ body {
     margin-bottom: 20px;
 }
 
+.countdown-bar-wrap {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 40px;
+    padding: 12px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border: 1px solid rgba(251,191,36,0.4);
+    flex-wrap: wrap;
+}
+
+.countdown-label {
+    color: #fbbf24;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.countdown-digits {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.cd-num {
+    background: #0f172a;
+    border: 2px solid #fbbf24;
+    color: #fde047;
+    font-size: 1.5rem;
+    font-weight: 900;
+    width: 40px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-variant-numeric: tabular-nums;
+    transition: transform 0.15s, border-color 0.3s;
+}
+
+.cd-num.pulse {
+    transform: scale(1.15);
+    border-color: #ff4444;
+    color: #ff6666;
+}
+
+.countdown-progress {
+    flex: 1;
+    min-width: 100px;
+    max-width: 300px;
+    height: 8px;
+    background: #0f172a;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(251,191,36,0.3);
+}
+
+.countdown-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #fbbf24, #f59e0b, #ef4444);
+    border-radius: 10px;
+    transition: width 1s linear;
+}
+
+.countdown-cycle {
+    color: #94a3b8;
+    font-size: 0.75rem;
+}
+
+.change-flash-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(251,191,36,0.15);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.change-flash-overlay.active {
+    opacity: 1;
+}
+
+@keyframes numberPop {
+    0% { transform: scale(0.7); opacity: 0; filter: blur(4px); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; filter: blur(0); }
+}
+
+.angka-fresh {
+    animation: numberPop 0.5s ease-out;
+}
+
+.change-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ef4444, #f59e0b);
+    color: white;
+    font-size: 0.6rem;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 700;
+    margin-left: 8px;
+    animation: badgePulse 1s ease infinite;
+    vertical-align: middle;
+}
+
+@keyframes badgePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
 .control-panel {
     background: rgba(30, 41, 59, 0.8);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
@@ -358,6 +470,16 @@ button:hover {
     max-width: 65%;
 }
 
+.angka-dinamis {
+    color: #4ade80;
+    transition: color 0.3s;
+}
+
+.angka-dinamis.fresh-glow {
+    color: #fde047;
+    text-shadow: 0 0 8px rgba(251,191,36,0.6);
+}
+
 .twin-highlight {
     background: rgba(251, 191, 36, 0.2);
     border-left: 3px solid #fbbf24;
@@ -425,6 +547,15 @@ button:hover {
     word-break: break-word;
 }
 
+.pred-value.angka-dinamis {
+    color: #4ade80;
+}
+
+.pred-value.angka-dinamis.fresh-glow {
+    color: #fde047;
+    text-shadow: 0 0 8px rgba(251,191,36,0.6);
+}
+
 .number-badge {
     display: inline-block;
     background: #1e293b;
@@ -452,7 +583,7 @@ button:hover {
     padding: 12px 24px;
     border-radius: 40px;
     font-weight: bold;
-    z-index: 1000;
+    z-index: 10000;
     animation: fadeInOut 2.5s ease forwards;
 }
 
@@ -477,6 +608,9 @@ button:hover {
     .markets-grid { grid-template-columns: 1fr; }
     .ellen-title { font-size: 2.5em; }
     .market-row-value { max-width: 70%; }
+    .countdown-bar-wrap { flex-direction: column; gap: 10px; }
+    .cd-num { width: 34px; height: 44px; font-size: 1.2rem; }
+    .countdown-progress { max-width: 100%; min-width: 80px; }
 }
 
 #bg-video {
@@ -502,10 +636,12 @@ button:hover {
 <div class="lightning-effect" style="--rand: -0.1;"></div>
 <div class="lightning-effect" style="--rand: 0.8;"></div>
 
+<div class="change-flash-overlay" id="changeFlash"></div>
+
 <div class="container">
     <div class="ellen-header">
         <h1 class="ellen-title">ELLEN CRISTIAN ⚡</h1>
-        <div class="subtitle"> PREDIKSI AKURAT</div>
+        <div class="subtitle">PREDIKSI AKURAT</div>
     </div>
 
     <div class="header-box">
@@ -515,7 +651,19 @@ button:hover {
     </div>
 
     <div class="header">
-        <h1>🔮 SILAKAN KLIK MENU COPY UNTUK HASIL YANG MEMUASKAN🔮</h1>
+        <h1>🔮 SILAKAN KLIK MENU COPY UNTUK HASIL YANG MEMUASKAN 🔮</h1>
+    </div>
+
+    <div class="countdown-bar-wrap">
+        <span class="countdown-label">⏱ ANGKA BARU DALAM</span>
+        <div class="countdown-digits">
+            <div class="cd-num" id="cdSec1">3</div>
+            <div class="cd-num" id="cdSec2">0</div>
+        </div>
+        <div class="countdown-progress">
+            <div class="countdown-progress-fill" id="cdProgress" style="width:0%"></div>
+        </div>
+        <span class="countdown-cycle" id="cdCycleInfo">Siklus #1</span>
     </div>
 
     <div class="control-panel">
@@ -539,7 +687,6 @@ button:hover {
 </div>
 
 <script>
-// ==================== 53 PASARAN LENGKAP ====================
 const PASARAN = [
     "TOTOMACAU PAGI", "KENTUCKY MIDDAY", "FLORIDA MIDDAY", "HUAHIN 0100", "NEW YORK MIDDAY",
     "BANGKOK 0130", "CAROLINA DAY", "BRUNEI 02", "OREGON03", "OREGON06", "CALIFORNIA", "FLORIDA EVENING",
@@ -554,175 +701,142 @@ const PASARAN = [
 
 const SHIO = ["TIKUS", "KERBAU", "MACAN", "KELINCI", "NAGA", "ULAR", "KUDA", "KAMBING", "MONYET", "AYAM", "ANJING", "BABI"];
 
-// ========== KHUSUS TOTOMACAU 5D dengan Twin khusus ==========
-const PREDIKSI_KHUSUS = {
-    "TOTOMACAU 5D SORE": {
-        bbfs: "7574271",
-        angkaMain: "42978",
-        angka5d: ["75069", "68200"],
-        angka4d: ["6718", "2952", "6804", "1255"],
-        angka3d: ["732", "501", "492", "312"],
-        angka2d: ["10", "45", "21", "11", "66", "67", "15", "19", "45", "37"],
-        colokBebas: "3/0",
-        colokBebas2D: "84/75/16",
-        colokShio: "KELINCI/TIKUS/BABI",
-        investTwin: "11/44/22"
-    },
-    "TOTOMACAU 5D MALAM": {
-        bbfs: "6616479",
-        angkaMain: "71548",
-        angka5d: ["60356", "55322"],
-        angka4d: ["7172", "2345", "1948", "3806"],
-        angka3d: ["526", "661", "605", "426"],
-        angka2d: ["58", "89", "54", "62", "74", "75", "18", "12", "17", "37"],
-        colokBebas: "4/4",
-        colokBebas2D: "33/96/32",
-        colokShio: "KUDA/KELINCI/KAMBING",
-        investTwin: "22/77/44"
-    }
-};
-
-// Fungsi untuk menghasilkan Invest Twin yang berbeda untuk setiap pasaran
-// Format: XX/YY/ZZ dengan angka berbeda-beda
-function generateUniqueTwin(pasaran) {
-    const today = new Date();
-    const seedBase = today.getFullYear() * 366 + today.getMonth() * 32 + today.getDate();
-    let hash = 0;
-    for (let i = 0; i < pasaran.length; i++) {
-        hash = ((hash << 5) - hash) + pasaran.charCodeAt(i);
-        hash = hash & hash;
-    }
-    hash = Math.abs(hash);
-    const finalSeed = seedBase + hash;
-    
-    function getRand(offset, max) {
-        const val = ((finalSeed + offset) * 9301 + 49297) % 233280;
-        return Math.floor(val / 233280 * max);
-    }
-    
-    // Generate 3 angka twin yang berbeda (bisa sama atau beda, tapi unik per market)
-    let twinDigits = [];
-    for (let i = 0; i < 3; i++) {
-        let digit = getRand(i * 17 + 500, 10);
-        twinDigits.push(digit);
-    }
-    // Pastikan tidak membosankan, kadang buat variasi
-    const twin1 = `${twinDigits[0]}${twinDigits[0]}`;
-    const twin2 = `${twinDigits[1]}${twinDigits[1]}`;
-    const twin3 = `${twinDigits[2]}${twinDigits[2]}`;
-    return `${twin1}/${twin2}/${twin3}`;
+// ========== SEMUA BERUBAH TIAP 30 DETIK ==========
+function getSlotSeed() {
+    return Math.floor(Date.now() / 30000);
 }
 
-// Generate prediksi random lengkap untuk pasaran biasa
-function getRandomPrediksi(pasaran) {
-    const dailySeed = getDailySeed();
+function seededRNG(seed, offset, max) {
+    const v = ((seed + offset) * 9301 + 49297) % 233280;
+    return Math.floor(v / 233280 * max);
+}
+
+function hashPasaran(pasaran) {
     let hash = 0;
     for (let i = 0; i < pasaran.length; i++) {
         hash = ((hash << 5) - hash) + pasaran.charCodeAt(i);
         hash = hash & hash;
     }
-    hash = Math.abs(hash);
-    const baseSeed = dailySeed + hash;
-    
-    function rng(offset, max) {
-        const v = ((baseSeed + offset) * 9301 + 49297) % 233280;
-        return Math.floor(v / 233280 * max);
+    return Math.abs(hash);
+}
+
+// ========== GENERATE PREDIKSI ==========
+// Semua angka + shio berubah tiap 30 detik
+// Setiap pasaran 100% berbeda BBFS-nya
+function getPrediksi(pasaran) {
+    const idx = PASARAN.indexOf(pasaran);
+    const seed = getSlotSeed();
+    // Channel unik per pasaran — dipisah sangat jauh
+    const channel = idx * 9973;
+    const hash = hashPasaran(pasaran);
+    const base = seed + channel + hash;
+
+    function rng(off, max) { return seededRNG(base, off, max); }
+
+    // ========== BBFS 7 DIGIT — DIACAK TIDAK DIURUTKAN ==========
+    // Supaya setiap pasaran benar-benar beda susunan BBFS-nya
+    let bbfsDigits = [];
+    let usedDigits = {};
+    for (let i = 0; i < 15; i++) {
+        let d = rng(i * 7 + 100, 10);
+        if (!usedDigits[d]) {
+            usedDigits[d] = true;
+            bbfsDigits.push(d);
+        }
+        if (bbfsDigits.length >= 7) break;
     }
-    
-    // BBFS 7 digit
-    let bbfsSet = new Set();
-    for (let i = 0; i < 30; i++) bbfsSet.add(rng(i*2+100, 10));
-    while (bbfsSet.size < 7) bbfsSet.add(rng(bbfsSet.size+500, 10));
-    let bbfs = Array.from(bbfsSet).sort().join('');
-    if (bbfs.length < 7) bbfs = bbfs.padEnd(7, '0');
-    
-    // Angka Main 5 digit
+    // Kalau belum 7, tambah pakai offset berbeda
+    let fallback = 0;
+    while (bbfsDigits.length < 7) {
+        let d = rng(9000 + fallback * 3, 10);
+        if (!usedDigits[d]) {
+            usedDigits[d] = true;
+            bbfsDigits.push(d);
+        }
+        fallback++;
+    }
+    // SHUFFLE — jangan di-sort, biar susunan berbeda tiap pasaran
+    for (let i = bbfsDigits.length - 1; i > 0; i--) {
+        const j = rng(5000 + i * 13, i + 1);
+        const tmp = bbfsDigits[i];
+        bbfsDigits[i] = bbfsDigits[j];
+        bbfsDigits[j] = tmp;
+    }
+    const bbfs = bbfsDigits.join('');
+
+    // ========== ANGKA MAIN 5 DIGIT ==========
     let mainSet = new Set();
-    for (let i = 0; i < 20; i++) mainSet.add(rng(i+300, 10));
-    let mainArr = Array.from(mainSet).slice(0,5);
-    while (mainArr.length < 5) mainArr.push(rng(mainArr.length+400, 10));
-    let angkaMain = mainArr.join('');
-    
-    // 4D (4 angka)
+    for (let i = 0; i < 25; i++) mainSet.add(rng(i * 4 + 500, 10));
+    let mainArr = Array.from(mainSet).slice(0, 5);
+    while (mainArr.length < 5) mainArr.push(rng(mainArr.length + 800, 10));
+    const angkaMain = mainArr.join('');
+
+    // ========== 4D — 4 ANGKA ==========
     let fourD = [];
     for (let i = 0; i < 4; i++) {
-        fourD.push(`${rng(i*5+500,10)}${rng(i*5+501,10)}${rng(i*5+502,10)}${rng(i*5+503,10)}`);
+        fourD.push(rng(1000+i*11,10)+''+rng(1001+i*11,10)+''+rng(1002+i*11,10)+''+rng(1003+i*11,10));
     }
-    // 3D (4 angka)
+
+    // ========== 3D — 4 ANGKA ==========
     let threeD = [];
     for (let i = 0; i < 4; i++) {
-        threeD.push(`${rng(i*6+600,10)}${rng(i*6+601,10)}${rng(i*6+602,10)}`);
+        threeD.push(rng(1500+i*13,10)+''+rng(1501+i*13,10)+''+rng(1502+i*13,10));
     }
-    // 2D (10 angka)
+
+    // ========== 2D — 10 ANGKA ==========
     let twoD = [];
     for (let i = 0; i < 10; i++) {
-        twoD.push(`${rng(i*7+700,10)}${rng(i*7+701,10)}`);
+        twoD.push(rng(2000+i*17,10)+''+rng(2001+i*17,10));
     }
-    // Colok Bebas
-    let colok = `${rng(800,10)}/${rng(801,10)}`;
-    // Colok Bebas 2D
-    let cb2dArr = [];
-    for (let i = 0; i < 3; i++) {
-        cb2dArr.push(`${rng(900+i*3,10)}${rng(901+i*3,10)}`);
-    }
-    let colok2d = cb2dArr.join('/');
-    // Colok Shio
-    let s1 = rng(1000,12);
-    let s2 = (s1 + rng(1001,11) + 1) % 12;
-    let s3 = (s2 + rng(1002,10) + 1) % 12;
-    let shio = `${SHIO[s1]}/${SHIO[s2]}/${SHIO[s3]}`;
-    
-    // INVEST TWIN UNIK UNTUK MARKET INI (BERBEDA-BEDA)
-    const twinUnik = generateUniqueTwin(pasaran);
-    
-    return { bbfs, angkaMain, fourD, threeD, twoD, colok, colok2d, shio, twin: twinUnik, isKhusus: false };
-}
 
-function getDailySeed() {
-    const t = new Date();
-    return t.getFullYear() * 366 + t.getMonth() * 32 + t.getDate();
-}
+    // ========== COLOK BEBAS ==========
+    const colok = rng(3000,10)+'/'+rng(3001,10);
 
-function getPrediksi(pasaran) {
-    if (PREDIKSI_KHUSUS[pasaran]) {
-        const k = PREDIKSI_KHUSUS[pasaran];
-        return {
-            bbfs: k.bbfs,
-            angkaMain: k.angkaMain,
-            fourD: k.angka4d,
-            threeD: k.angka3d,
-            twoD: k.angka2d,
-            colok: k.colokBebas,
-            colok2d: k.colokBebas2D,
-            shio: k.colokShio,
-            twin: k.investTwin,
-            angka5d: k.angka5d,
-            isKhusus: true
-        };
+    // ========== COLOK BEBAS 2D ==========
+    const colok2d = rng(3500,10)+''+rng(3501,10)+'/'+rng(3502,10)+''+rng(3503,10)+'/'+rng(3504,10)+''+rng(3505,10);
+
+    // ========== COLOK SHIO — BERUBAH TIAP 30 DETIK ==========
+    let s1 = rng(4000, 12);
+    let s2 = (s1 + rng(4001, 11) + 1) % 12;
+    let s3 = (s2 + rng(4002, 10) + 1) % 12;
+    const shio = SHIO[s1]+'/'+SHIO[s2]+'/'+SHIO[s3];
+
+    // ========== INVEST TWIN ==========
+    let td = [rng(6000,10), rng(6001,10), rng(6002,10)];
+    const twin = td[0]+''+td[0]+'/'+td[1]+''+td[1]+'/'+td[2]+''+td[2];
+
+    // ========== KHUSUS TOTOMACAU 5D ==========
+    let isKhusus = false;
+    let angka5d = null;
+    if (pasaran === "TOTOMACAU 5D SORE" || pasaran === "TOTOMACAU 5D MALAM") {
+        isKhusus = true;
+        angka5d = [
+            rng(7000,10)+''+rng(7001,10)+''+rng(7002,10)+''+rng(7003,10)+''+rng(7004,10),
+            rng(8000,10)+''+rng(8001,10)+''+rng(8002,10)+''+rng(8003,10)+''+rng(8004,10)
+        ];
     }
-    return getRandomPrediksi(pasaran);
+
+    return { bbfs:bbfs, angkaMain:angkaMain, fourD:fourD, threeD:threeD, twoD:twoD, colok:colok, colok2d:colok2d, shio:shio, twin:twin, angka5d:angka5d, isKhusus:isKhusus };
 }
 
 function getTanggal() {
     const now = new Date();
-    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-    const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-    return `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+    const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    return days[now.getDay()]+', '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
 }
 
 function getJam() {
     const now = new Date();
-    return `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+    return now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0')+':'+now.getSeconds().toString().padStart(2,'0');
 }
 
 function formatTeks(pasaran) {
     const p = getPrediksi(pasaran);
     const tgl = getTanggal();
-    let text = `Prediksi ${pasaran}\nHari ${tgl}\nBBFS KUAT: ${p.bbfs}\nAngka Main : ${p.angkaMain}`;
-    if (p.isKhusus && p.angka5d) {
-        text += `\n5D  : ${p.angka5d.join(' ')}`;
-    }
-    text += `\n4D (BB): ${p.fourD.join(' ')}\n3D (BB) : ${p.threeD.join(' ')}\n2D (BB): ${p.twoD.join(' ')}\nColok Bebas : ${p.colok}\nColok bebas 2D : ${p.colok2d}\nColok Shio : ${p.shio}\nInvest Twin : ${p.twin}\nBiasakan UPS - UTAMAKAN PREDIKSI SENDIRI`;
+    let text = 'Prediksi '+pasaran+'\nHari '+tgl+'\nBBFS KUAT: '+p.bbfs+'\nAngka Main : '+p.angkaMain;
+    if (p.isKhusus && p.angka5d) text += '\n5D  : '+p.angka5d.join(' ');
+    text += '\n4D (BB): '+p.fourD.join(' ')+'\n3D (BB) : '+p.threeD.join(' ')+'\n2D (BB): '+p.twoD.join(' ')+'\nColok Bebas : '+p.colok+'\nColok bebas 2D : '+p.colok2d+'\nColok Shio : '+p.shio+'\nInvest Twin : '+p.twin+'\nBiasakan UPS - UTAMAKAN PREDIKSI SENDIRI';
     return text;
 }
 
@@ -733,13 +847,13 @@ function toast(msg) {
     t.className = 'toast';
     t.innerHTML = msg;
     document.body.appendChild(t);
-    setTimeout(() => t.remove(), 2500);
+    setTimeout(function(){ if(t.parentNode) t.remove(); }, 2500);
 }
 
 async function copy(text, msg) {
     try {
         await navigator.clipboard.writeText(text);
-        toast(`✅ ${msg}`);
+        toast('✅ '+msg);
     } catch(e) {
         let ta = document.createElement('textarea');
         ta.value = text;
@@ -747,174 +861,250 @@ async function copy(text, msg) {
         ta.select();
         document.execCommand('copy');
         document.body.removeChild(ta);
-        toast(`✅ ${msg}`);
+        toast('✅ '+msg);
     }
 }
 
-function tampilkanSemua() {
+// ========== STATE ==========
+let lastSlotSeed = getSlotSeed();
+let cycleCount = 1;
+let currentView = 'all';
+let currentSearchKeyword = '';
+let currentSingleMarket = null;
+
+function triggerChangeFlash() {
+    const overlay = document.getElementById('changeFlash');
+    overlay.classList.add('active');
+    setTimeout(function(){ overlay.classList.remove('active'); }, 300);
+}
+
+// ========== COUNTDOWN 30 DETIK ==========
+function updateCountdown() {
+    const now = new Date();
+    const secInSlot = now.getSeconds() % 30;
+    const secondsLeft = 30 - secInSlot;
+    const ss = secondsLeft.toString().padStart(2,'0');
+
+    document.getElementById('cdSec1').textContent = ss[0];
+    document.getElementById('cdSec2').textContent = ss[1];
+
+    const progress = ((30 - secondsLeft) / 30) * 100;
+    document.getElementById('cdProgress').style.width = progress + '%';
+
+    const s1 = document.getElementById('cdSec1');
+    const s2 = document.getElementById('cdSec2');
+    if (secondsLeft <= 5) {
+        s1.classList.add('pulse');
+        s2.classList.add('pulse');
+    } else {
+        s1.classList.remove('pulse');
+        s2.classList.remove('pulse');
+    }
+
+    const currentSeed = getSlotSeed();
+    if (currentSeed !== lastSlotSeed) {
+        lastSlotSeed = currentSeed;
+        cycleCount++;
+        triggerChangeFlash();
+        refreshCurrentView();
+    }
+
+    document.getElementById('cdCycleInfo').textContent = 'Siklus #'+cycleCount;
+}
+
+function refreshCurrentView() {
+    if (currentView === 'all') {
+        tampilkanSemua(true);
+    } else if (currentView === 'single' && currentSingleMarket) {
+        tampilkanSingle(currentSingleMarket, true);
+    } else if (currentView === 'multi') {
+        cariPasaranForce(currentSearchKeyword, true);
+    }
+}
+
+function tampilkanSemua(isRefresh) {
+    currentView = 'all';
     const stats = document.getElementById('searchStats');
     stats.style.display = 'block';
-    stats.innerHTML = `📊 Menampilkan <span>${PASARAN.length}</span> Pasaran | SETIAP MARKET PUNYA INVEST TWIN BERBEDA (contoh: 88/22/99, 11/55/33, dll) | Khusus TOTOMACAU 5D prediksi spesial`;
-    
-    let html = `<div class="markets-grid">`;
+    const badge = isRefresh ? '<span class="change-badge">BARU!</span>' : '';
+    stats.innerHTML = '📊 Menampilkan <span>'+PASARAN.length+'</span> Pasaran '+badge+'| SETIAP PASARAN BBFS BERBEDA | Semua angka & shio berubah tiap 30 detik';
+
+    let html = '<div class="markets-grid">';
     for (let i = 0; i < PASARAN.length; i++) {
         const p = getPrediksi(PASARAN[i]);
-        html += `
-        <div class="market-item">
-            <div class="market-header">
-                <span class="market-name">🎲 ${PASARAN[i]}</span>
-                <button class="copy-btn" data-market="${PASARAN[i].replace(/'/g, "\\'")}">📋 Copy</button>
-            </div>
-            <div class="market-content">
-                <div class="market-row"><span class="market-row-label">BBFS KUAT:</span><span class="market-row-value">${p.bbfs}</span></div>
-                <div class="market-row"><span class="market-row-label">Angka Main:</span><span class="market-row-value">${p.angkaMain}</span></div>
-                ${p.isKhusus && p.angka5d ? `<div class="market-row"><span class="market-row-label">5D:</span><span class="market-row-value">${p.angka5d[0]} ${p.angka5d[1]}</span></div>` : ''}
-                <div class="market-row"><span class="market-row-label">4D (BB):</span><span class="market-row-value">${p.fourD[0]} ${p.fourD[1]} ${p.fourD[2]} ${p.fourD[3]}</span></div>
-                <div class="market-row"><span class="market-row-label">3D (BB):</span><span class="market-row-value">${p.threeD[0]} ${p.threeD[1]} ${p.threeD[2]} ${p.threeD[3]}</span></div>
-                <div class="market-row"><span class="market-row-label">2D Top 5:</span><span class="market-row-value">${p.twoD.slice(0,5).join(' ')}</span></div>
-                <div class="market-row"><span class="market-row-label">Colok Bebas:</span><span class="market-row-value">${p.colok}</span></div>
-                <div class="market-row"><span class="market-row-label">Colok 2D:</span><span class="market-row-value">${p.colok2d}</span></div>
-                <div class="twin-highlight">
-                    <div class="market-row"><span class="market-row-label">🔮 Invest Twin :</span><span class="market-row-value twin-text">${p.twin}</span></div>
-                </div>
-            </div>
-        </div>`;
+        const fc = isRefresh ? ' angka-fresh' : '';
+        const glow = isRefresh ? ' fresh-glow' : '';
+        const fiveRow = (p.isKhusus && p.angka5d)
+            ? '<div class="market-row"><span class="market-row-label">5D:</span><span class="market-row-value angka-dinamis'+glow+'">'+p.angka5d[0]+' '+p.angka5d[1]+'</span></div>'
+            : '';
+        html += '<div class="market-item'+fc+'">' +
+            '<div class="market-header"><span class="market-name">🎲 '+PASARAN[i]+'</span>' +
+            '<button class="copy-btn" data-market="'+PASARAN[i].replace(/'/g,"\\'")+'">📋 Copy</button></div>' +
+            '<div class="market-content">' +
+            '<div class="market-row"><span class="market-row-label">BBFS KUAT:</span><span class="market-row-value angka-dinamis'+glow+'">'+p.bbfs+'</span></div>' +
+            '<div class="market-row"><span class="market-row-label">Angka Main:</span><span class="market-row-value angka-dinamis'+glow+'">'+p.angkaMain+'</span></div>' +
+            fiveRow +
+            '<div class="market-row"><span class="market-row-label">4D (BB):</span><span class="market-row-value angka-dinamis'+glow+'">'+p.fourD.join(' ')+'</span></div>' +
+            '<div class="market-row"><span class="market-row-label">3D (BB):</span><span class="market-row-value angka-dinamis'+glow+'">'+p.threeD.join(' ')+'</span></div>' +
+            '<div class="market-row"><span class="market-row-label">2D Top 5:</span><span class="market-row-value angka-dinamis'+glow+'">'+p.twoD.slice(0,5).join(' ')+'</span></div>' +
+            '<div class="market-row"><span class="market-row-label">Colok Bebas:</span><span class="market-row-value angka-dinamis'+glow+'">'+p.colok+'</span></div>' +
+            '<div class="market-row"><span class="market-row-label">Colok 2D:</span><span class="market-row-value angka-dinamis'+glow+'">'+p.colok2d+'</span></div>' +
+            '<div class="market-row"><span class="market-row-label">Colok Shio:</span><span class="market-row-value angka-dinamis'+glow+'">'+p.shio+'</span></div>' +
+            '<div class="twin-highlight"><div class="market-row"><span class="market-row-label">🔮 Invest Twin :</span><span class="market-row-value twin-text angka-dinamis'+glow+'">'+p.twin+'</span></div></div>' +
+            '</div></div>';
     }
-    html += `</div>`;
+    html += '</div>';
     document.getElementById('contentArea').innerHTML = html;
-    
-    document.querySelectorAll('.copy-btn').forEach(btn => {
-        btn.onclick = (e) => {
+
+    document.querySelectorAll('.copy-btn').forEach(function(btn){
+        btn.onclick = function(e){
             e.stopPropagation();
-            const market = btn.getAttribute('data-market');
-            copy(formatTeks(market), `Prediksi ${market} disalin!`);
+            copy(formatTeks(btn.getAttribute('data-market')), 'Prediksi '+btn.getAttribute('data-market')+' disalin!');
         };
     });
 }
 
-function cariPasaran() {
-    const keyword = document.getElementById('searchInput').value.trim();
+function tampilkanSingle(market, isRefresh) {
+    currentView = 'single';
+    currentSingleMarket = market;
+    document.getElementById('searchStats').style.display = 'none';
+
+    const p = getPrediksi(market);
+    const fc = isRefresh ? ' angka-fresh' : '';
+    const glow = isRefresh ? ' fresh-glow' : '';
+    const badge = isRefresh ? '<span class="change-badge">ANGKA BARU!</span>' : '';
+    const fiveRow = (p.isKhusus && p.angka5d)
+        ? '<div class="pred-item"><div class="pred-label">5D (KHUSUS)</div><div class="pred-value angka-dinamis'+glow+'">'+p.angka5d.join(' · ')+'</div></div>'
+        : '';
+    const twoDBadges = p.twoD.map(function(n){ return '<span class="number-badge">'+n+'</span>'; }).join('');
+
+    document.getElementById('contentArea').innerHTML =
+        '<div class="single-card'+fc+'">' +
+        '<div class="single-header"><div><h2>🎯 '+market+' '+badge+'</h2><div class="date">📅 '+getTanggal()+' | '+getJam()+'</div></div>' +
+        '<button id="copySingleBtn" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border:none;padding:10px 20px;border-radius:40px;font-weight:bold;">📋 COPY PREDIKSI</button></div>' +
+        '<div class="prediction-grid">' +
+        '<div class="pred-item"><div class="pred-label">BBFS KUAT</div><div class="pred-value angka-dinamis'+glow+'">'+p.bbfs+'</div></div>' +
+        '<div class="pred-item"><div class="pred-label">Angka Main</div><div class="pred-value angka-dinamis'+glow+'">'+p.angkaMain+'</div></div>' +
+        fiveRow +
+        '<div class="pred-item"><div class="pred-label">4D (BB)</div><div class="pred-value angka-dinamis'+glow+'">'+p.fourD.join(' · ')+'</div></div>' +
+        '<div class="pred-item"><div class="pred-label">3D (BB)</div><div class="pred-value angka-dinamis'+glow+'">'+p.threeD.join(' · ')+'</div></div>' +
+        '<div class="pred-item"><div class="pred-label">2D (BB)</div><div class="pred-value angka-dinamis'+glow+'">'+twoDBadges+'</div></div>' +
+        '<div class="pred-item"><div class="pred-label">Colok Bebas</div><div class="pred-value angka-dinamis'+glow+'">'+p.colok+'</div></div>' +
+        '<div class="pred-item"><div class="pred-label">Colok Bebas 2D</div><div class="pred-value angka-dinamis'+glow+'">'+p.colok2d+'</div></div>' +
+        '<div class="pred-item"><div class="pred-label">Colok Shio</div><div class="pred-value angka-dinamis'+glow+'">'+p.shio+'</div></div>' +
+        '<div class="pred-item" style="border-left-color:#ffaa44; background:#2a1f0a;"><div class="pred-label">⚡ INVEST TWIN</div><div class="pred-value angka-dinamis'+glow+'" style="font-size:1.4rem;">'+p.twin+'</div></div>' +
+        '</div></div>';
+
+    document.getElementById('copySingleBtn').onclick = function(){
+        copy(formatTeks(market), 'Prediksi '+market+' disalin!');
+    };
+}
+
+function cariPasaranForce(keyword, isRefresh) {
     const stats = document.getElementById('searchStats');
-    
-    if (keyword === "") {
-        tampilkanSemua();
-        return;
-    }
-    
-    const hasil = PASARAN.filter(p => p.toLowerCase().includes(keyword.toLowerCase()));
-    
+
+    if (keyword === '') { tampilkanSemua(isRefresh); return; }
+
+    const hasil = PASARAN.filter(function(p){ return p.toLowerCase().includes(keyword.toLowerCase()); });
+
     if (hasil.length === 0) {
         stats.style.display = 'block';
-        stats.innerHTML = `🔍 <span>0</span> pasaran ditemukan. Coba kata kunci lain.`;
-        document.getElementById('contentArea').innerHTML = `<div class="empty-search">😢 Tidak ada pasaran yang cocok dengan "<strong>${keyword}</strong>"<br><br>💡 Coba: KENTUCKY, SYDNEY, HONGKONG, atau klik TAMPILKAN ALL</div>`;
+        stats.innerHTML = '🔍 <span>0</span> pasaran ditemukan. Coba kata kunci lain.';
+        document.getElementById('contentArea').innerHTML = '<div class="empty-search">😢 Tidak ada pasaran yang cocok dengan "<strong>'+keyword+'</strong>"<br><br>💡 Coba: KENTUCKY, SYDNEY, HONGKONG, atau klik TAMPILKAN ALL</div>';
         return;
     }
-    
+
     if (hasil.length === 1) {
-        const p = getPrediksi(hasil[0]);
-        const tgl = getTanggal();
-        const jam = getJam();
-        stats.style.display = 'none';
-        
-        let special5DRow = '';
-        if (p.isKhusus && p.angka5d) {
-            special5DRow = `<div class="pred-item"><div class="pred-label">5D (KHUSUS)</div><div class="pred-value">${p.angka5d.join(' · ')}</div></div>`;
-        }
-        
-        document.getElementById('contentArea').innerHTML = `
-        <div class="single-card">
-            <div class="single-header">
-                <div><h2>🎯 ${hasil[0]}</h2><div class="date">📅 ${tgl} | ${jam}</div></div>
-                <button id="copySingleBtn" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border:none;padding:10px 20px;border-radius:40px;font-weight:bold;">📋 COPY PREDIKSI</button>
-            </div>
-            <div class="prediction-grid">
-                <div class="pred-item"><div class="pred-label">BBFS KUAT</div><div class="pred-value">${p.bbfs}</div></div>
-                <div class="pred-item"><div class="pred-label">Angka Main</div><div class="pred-value">${p.angkaMain}</div></div>
-                ${special5DRow}
-                <div class="pred-item"><div class="pred-label">4D (BB)</div><div class="pred-value">${p.fourD.join(' · ')}</div></div>
-                <div class="pred-item"><div class="pred-label">3D (BB)</div><div class="pred-value">${p.threeD.join(' · ')}</div></div>
-                <div class="pred-item"><div class="pred-label">2D (BB)</div><div class="pred-value">${p.twoD.map(n => `<span class="number-badge">${n}</span>`).join('')}</div></div>
-                <div class="pred-item"><div class="pred-label">Colok Bebas</div><div class="pred-value">${p.colok}</div></div>
-                <div class="pred-item"><div class="pred-label">Colok Bebas 2D</div><div class="pred-value">${p.colok2d}</div></div>
-                <div class="pred-item"><div class="pred-label">Colok Shio</div><div class="pred-value">${p.shio}</div></div>
-                <div class="pred-item" style="border-left-color:#ffaa44; background:#2a1f0a;"><div class="pred-label">⚡ INVEST TWIN (BERBEDA TIAP PASARAN)</div><div class="pred-value" style="font-size:1.4rem;">${p.twin}</div></div>
-            </div>
-        </div>`;
-        document.getElementById('copySingleBtn').onclick = () => copy(formatTeks(hasil[0]), `Prediksi ${hasil[0]} disalin!`);
+        tampilkanSingle(hasil[0], isRefresh);
     } else {
+        currentView = 'multi';
+        currentSearchKeyword = keyword;
+        const badge = isRefresh ? '<span class="change-badge">BARU!</span>' : '';
         stats.style.display = 'block';
-        stats.innerHTML = `🔍 Menampilkan <span>${hasil.length}</span> pasaran (pencarian: ${keyword}) | Setiap market punya Invest Twin berbeda`;
-        
-        let html = `<div class="markets-grid">`;
+        stats.innerHTML = '🔍 Menampilkan <span>'+hasil.length+'</span> pasaran '+badge+'| Setiap market punya Invest Twin berbeda';
+
+        let html = '<div class="markets-grid">';
         for (let i = 0; i < hasil.length; i++) {
             const p = getPrediksi(hasil[i]);
-            html += `
-            <div class="market-item">
-                <div class="market-header">
-                    <span class="market-name">🎲 ${hasil[i]}</span>
-                    <button class="copy-result-btn" data-market="${hasil[i].replace(/'/g, "\\'")}">📋 Copy</button>
-                </div>
-                <div class="market-content">
-                    <div class="market-row"><span class="market-row-label">BBFS KUAT:</span><span class="market-row-value">${p.bbfs}</span></div>
-                    <div class="market-row"><span class="market-row-label">Angka Main:</span><span class="market-row-value">${p.angkaMain}</span></div>
-                    ${p.isKhusus && p.angka5d ? `<div class="market-row"><span class="market-row-label">5D:</span><span class="market-row-value">${p.angka5d[0]} ${p.angka5d[1]}</span></div>` : ''}
-                    <div class="market-row"><span class="market-row-label">4D (BB):</span><span class="market-row-value">${p.fourD[0]} ${p.fourD[1]}</span></div>
-                    <div class="twin-highlight"><span class="market-row-label">🔮 Invest Twin :</span><span class="twin-text">${p.twin}</span></div>
-                </div>
-            </div>`;
+            const fc = isRefresh ? ' angka-fresh' : '';
+            const glow = isRefresh ? ' fresh-glow' : '';
+            const fiveRow = (p.isKhusus && p.angka5d)
+                ? '<div class="market-row"><span class="market-row-label">5D:</span><span class="market-row-value angka-dinamis'+glow+'">'+p.angka5d[0]+' '+p.angka5d[1]+'</span></div>'
+                : '';
+            html += '<div class="market-item'+fc+'">' +
+                '<div class="market-header"><span class="market-name">🎲 '+hasil[i]+'</span>' +
+                '<button class="copy-result-btn" data-market="'+hasil[i].replace(/'/g,"\\'")+'">📋 Copy</button></div>' +
+                '<div class="market-content">' +
+                '<div class="market-row"><span class="market-row-label">BBFS KUAT:</span><span class="market-row-value angka-dinamis'+glow+'">'+p.bbfs+'</span></div>' +
+                '<div class="market-row"><span class="market-row-label">Angka Main:</span><span class="market-row-value angka-dinamis'+glow+'">'+p.angkaMain+'</span></div>' +
+                fiveRow +
+                '<div class="market-row"><span class="market-row-label">4D (BB):</span><span class="market-row-value angka-dinamis'+glow+'">'+p.fourD[0]+' '+p.fourD[1]+'</span></div>' +
+                '<div class="market-row"><span class="market-row-label">Colok Bebas:</span><span class="market-row-value angka-dinamis'+glow+'">'+p.colok+'</span></div>' +
+                '<div class="market-row"><span class="market-row-label">Colok 2D:</span><span class="market-row-value angka-dinamis'+glow+'">'+p.colok2d+'</span></div>' +
+                '<div class="market-row"><span class="market-row-label">Colok Shio:</span><span class="market-row-value angka-dinamis'+glow+'">'+p.shio+'</span></div>' +
+                '<div class="twin-highlight"><span class="market-row-label">🔮 Invest Twin :</span><span class="twin-text angka-dinamis'+glow+'">'+p.twin+'</span></div>' +
+                '</div></div>';
         }
-        html += `</div>`;
+        html += '</div>';
         document.getElementById('contentArea').innerHTML = html;
-        
-        document.querySelectorAll('.copy-result-btn').forEach(btn => {
-            btn.onclick = (e) => {
+
+        document.querySelectorAll('.copy-result-btn').forEach(function(btn){
+            btn.onclick = function(e){
                 e.stopPropagation();
-                const market = btn.getAttribute('data-market');
-                copy(formatTeks(market), `Prediksi ${market} disalin!`);
+                copy(formatTeks(btn.getAttribute('data-market')), 'Prediksi '+btn.getAttribute('data-market')+' disalin!');
             };
         });
     }
 }
 
-function updateJam() {
-    document.getElementById('dateTime').innerHTML = getTanggal() + ' | ' + getJam();
+function cariPasaran() {
+    cariPasaranForce(document.getElementById('searchInput').value.trim(), false);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function updateJam() {
+    document.getElementById('dateTime').innerHTML = getTanggal()+' | '+getJam();
+}
+
+document.addEventListener('DOMContentLoaded', function(){
     const select = document.getElementById('marketSelect');
     select.innerHTML = '<option value="">-- Pilih Pasaran --</option>';
-    PASARAN.forEach(p => {
+    PASARAN.forEach(function(p){
         let opt = document.createElement('option');
         opt.value = p;
         opt.textContent = p;
         select.appendChild(opt);
     });
-    
-    select.onchange = () => {
+
+    select.onchange = function(){
         if (select.value) {
             document.getElementById('searchInput').value = select.value;
             cariPasaran();
         }
     };
-    
+
     document.getElementById('searchInput').oninput = cariPasaran;
-    document.getElementById('showAllBtn').onclick = () => {
+    document.getElementById('showAllBtn').onclick = function(){
         document.getElementById('searchInput').value = '';
-        tampilkanSemua();
+        select.value = '';
+        tampilkanSemua(false);
     };
-    
-    document.getElementById('copyAllBtn').onclick = () => {
+
+    document.getElementById('copyAllBtn').onclick = function(){
         let semuaTeks = '';
         for (let i = 0; i < PASARAN.length; i++) {
             semuaTeks += formatTeks(PASARAN[i]);
             if (i < PASARAN.length - 1) semuaTeks += '\n\n';
         }
-        copy(semuaTeks, 'Semua 53 pasaran + Invest Twin berhasil disalin!');
+        copy(semuaTeks, 'Semua 53 pasaran berhasil disalin!');
     };
-    
+
     updateJam();
     setInterval(updateJam, 1000);
-    tampilkanSemua();
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    tampilkanSemua(false);
 });
 </script>
 </body>
