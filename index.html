@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>DASHBORD PREDIKSI TOGEL ⚡ | ELLEN CRISTIAN</title>
+<title>ELLEN CRISTIAN ⚡ | PREDIKSI TOGEL | INVEST TWIN BERBEDA TIAP PASARAN</title>
 <style>
 * {
     margin: 0;
@@ -12,21 +12,101 @@
 }
 
 body {
-    background: radial-gradient(circle at top, #001933, #000);
+    background: radial-gradient(circle at top, #0a0f1e, #03060c);
     font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
     min-height: 100vh;
     padding: 20px;
+    position: relative;
 }
 
 .container {
     max-width: 1400px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* ELLEN CRISTIAN HEADER DENGAN EFEK PETIR */
+.ellen-header {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.ellen-title {
+    font-size: 5em;
+    font-weight: bold;
+    background: linear-gradient(270deg, #00ccff, #00ffff, #0088ff);
+    background-size: 600% 600%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientMove 5s ease infinite, flicker 1.5s infinite;
+    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff; }
+    20%, 24%, 55% { opacity: 0.3; text-shadow: none; }
+}
+
+.lightning-effect {
+    position: absolute;
+    top: -50%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, cyan, rgba(0,255,255,0));
+    animation: strikeRandom 1.5s infinite;
+    z-index: 1;
+    opacity: 0;
+}
+
+@keyframes strikeRandom {
+    0%, 85%, 100% { opacity: 0; transform: translateX(0); }
+    86%, 90% { opacity: 1; transform: translateX(calc(80vw * var(--rand))); }
+}
+
+.flash-effect {
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 200%;
+    height: 100%;
+    background: rgba(0,255,255,0.2);
+    animation: flashAnim 2s infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes flashAnim {
+    0%, 90%, 100% { opacity: 0; }
+    95% { opacity: 0.5; }
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #66ccff;
+    margin-top: 10px;
+    text-shadow: 0 0 5px #00ccff;
+    letter-spacing: 2px;
 }
 
 .header-box {
     width: 100%;
     margin: 0 auto 30px auto;
-    padding: 30px;
+    padding: 20px;
     border-radius: 40px;
     text-align: center;
     background: #020617;
@@ -41,7 +121,7 @@ body {
 }
 
 .rainbow-text {
-    font-size: 42px;
+    font-size: 32px;
     font-weight: bold;
     background: linear-gradient(90deg, red, orange, yellow, lime, cyan, blue, violet);
     background-size: 300%;
@@ -54,14 +134,6 @@ body {
 @keyframes rainbowMove {
     0% { background-position: 0%; }
     100% { background-position: 300%; }
-}
-
-.nama {
-    font-size: 28px;
-    font-weight: bold;
-    color: #66ccff;
-    margin-top: 10px;
-    text-shadow: 0 0 5px #00ccff;
 }
 
 .lights {
@@ -95,8 +167,8 @@ body {
 }
 
 .running-light {
-    margin-top: 20px;
-    height: 4px;
+    margin-top: 15px;
+    height: 3px;
     width: 100%;
     background: linear-gradient(90deg, transparent, cyan, transparent);
     background-size: 200px;
@@ -108,17 +180,14 @@ body {
     100% { background-position: 200px; }
 }
 
-.header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
 .header h1 {
-    font-size: 1.5rem;
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, #facc15, #f59e0b);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .control-panel {
@@ -132,7 +201,7 @@ body {
     gap: 15px;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid rgba(251, 191, 36, 0.3);
+    border: 1px solid rgba(251, 191, 36, 0.4);
 }
 
 .search-group {
@@ -142,7 +211,7 @@ body {
 
 .search-group input {
     width: 100%;
-    background: #1e293b;
+    background: #0f172a;
     border: 1px solid #fbbf24;
     padding: 10px 20px;
     border-radius: 40px;
@@ -163,7 +232,7 @@ body {
 }
 
 select {
-    background: #1e293b;
+    background: #0f172a;
     border: 1px solid #fbbf24;
     padding: 10px 20px;
     border-radius: 40px;
@@ -231,7 +300,7 @@ button:hover {
 
 .markets-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     gap: 20px;
 }
 
@@ -245,13 +314,13 @@ button:hover {
 
 .market-item:hover {
     transform: translateY(-3px);
-    border-color: rgba(251, 191, 36, 0.6);
+    border-color: #fbbf24;
 }
 
 .market-header {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     padding: 12px 15px;
-    border-bottom: 1px solid rgba(251, 191, 36, 0.3);
+    border-bottom: 1px solid rgba(251, 191, 36, 0.4);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -260,17 +329,7 @@ button:hover {
 .market-name {
     color: #fbbf24;
     font-weight: bold;
-    font-size: 0.9rem;
-}
-
-.copy-market-btn {
-    background: rgba(251, 191, 36, 0.2);
-    border: none;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    cursor: pointer;
-    color: #fbbf24;
+    font-size: 0.95rem;
 }
 
 .market-content {
@@ -282,10 +341,13 @@ button:hover {
     justify-content: space-between;
     margin-bottom: 8px;
     font-size: 0.8rem;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .market-row-label {
     color: #94a3b8;
+    font-weight: 500;
 }
 
 .market-row-value {
@@ -296,10 +358,25 @@ button:hover {
     max-width: 65%;
 }
 
+.twin-highlight {
+    background: rgba(251, 191, 36, 0.2);
+    border-left: 3px solid #fbbf24;
+    padding: 8px 10px;
+    border-radius: 12px;
+    margin-top: 8px;
+}
+
+.twin-text {
+    font-weight: bold;
+    color: #ffd966;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
 .single-card {
-    background: rgba(15, 23, 42, 0.9);
-    border-radius: 24px;
-    border: 1px solid rgba(251, 191, 36, 0.3);
+    background: rgba(15, 23, 42, 0.95);
+    border-radius: 28px;
+    border: 1px solid #fbbf24;
     overflow: hidden;
 }
 
@@ -327,7 +404,7 @@ button:hover {
 }
 
 .pred-item {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     border-radius: 16px;
     padding: 15px;
     border-left: 3px solid #fbbf24;
@@ -338,6 +415,7 @@ button:hover {
     font-size: 0.7rem;
     text-transform: uppercase;
     margin-bottom: 8px;
+    letter-spacing: 1px;
 }
 
 .pred-value {
@@ -375,6 +453,14 @@ button:hover {
     border-radius: 40px;
     font-weight: bold;
     z-index: 1000;
+    animation: fadeInOut 2.5s ease forwards;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(20px); }
+    15% { opacity: 1; transform: translateY(0); }
+    85% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(20px); }
 }
 
 .empty-search {
@@ -389,7 +475,7 @@ button:hover {
 @media (max-width: 768px) {
     .control-panel { flex-direction: column; align-items: stretch; }
     .markets-grid { grid-template-columns: 1fr; }
-    .rainbow-text { font-size: 28px; }
+    .ellen-title { font-size: 2.5em; }
     .market-row-value { max-width: 70%; }
 }
 
@@ -401,6 +487,7 @@ button:hover {
     min-height: 100%;
     z-index: -1;
     object-fit: cover;
+    opacity: 0.3;
 }
 </style>
 </head>
@@ -409,21 +496,31 @@ button:hover {
     <source src="https://v1.pinimg.com/videos/mc/720p/29/df/33/29df3353634a0d9bb5b72206c3ec9d31.mp4" type="video/mp4">
 </video>
 
+<div class="flash-effect"></div>
+<div class="lightning-effect" style="--rand: -0.6;"></div>
+<div class="lightning-effect" style="--rand: 0.3;"></div>
+<div class="lightning-effect" style="--rand: -0.1;"></div>
+<div class="lightning-effect" style="--rand: 0.8;"></div>
+
 <div class="container">
-    <div class="header-box" style="position: relative;">
+    <div class="ellen-header">
+        <h1 class="ellen-title">ELLEN CRISTIAN ⚡</h1>
+        <div class="subtitle"> PREDIKSI AKURAT</div>
+    </div>
+
+    <div class="header-box">
         <div class="lights"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-        <div class="rainbow-text">✨ DASHBORD PREDIKSI TOGEL ⚡</div>
-        <div class="nama">ELLEN CRISTIAN</div>
+        <div class="rainbow-text">⚡ BEKERJA KERAS DEMI KEINGINAN YANG BELUM KECAPAI⚡</div>
         <div class="running-light"></div>
     </div>
 
     <div class="header">
-        <h1>🔍 KERJA KERAS HARI INI, NIKMATI HASILNYA NANTI ! NANTI NYA KAPAN ? WAKTU RAYA MONYET 🔍</h1>
+        <h1>🔮 SILAKAN KLIK MENU COPY UNTUK HASIL YANG MEMUASKAN🔮</h1>
     </div>
 
     <div class="control-panel">
         <div class="search-group">
-            <input type="text" id="searchInput" placeholder="🔎 Cari pasaran... (contoh: TOTOMACAU, SYDNEY, HONGKONG)" autocomplete="off">
+            <input type="text" id="searchInput" placeholder="🔎 Cari pasaran... (contoh: KENTUCKY, SYDNEY, HONGKONG)" autocomplete="off">
         </div>
         <div class="select-group">
             <label>📌 PILIH PASARAN</label>
@@ -431,18 +528,18 @@ button:hover {
         </div>
         <div class="btn-group">
             <button id="showAllBtn" class="btn-show-all">📋 TAMPILKAN ALL (53 PASARAN)</button>
-            <button id="copyAllBtn" class="btn-all">📋 COPY ALL</button>
+            <button id="copyAllBtn" class="btn-all">📋 COPY ALL PREDIKSI</button>
         </div>
         <div class="date-info" id="dateTime"></div>
     </div>
 
     <div id="searchStats" class="search-stats"></div>
     <div id="contentArea"></div>
-    <div class="footer">⚠️ BIASAKAN UPS - UTAMAKAN PREDIKSI SENDIRI | 53 Pasaran Lengkap | Khusus TOTOMACAU 5D SORE & MALAM prediksi spesial</div>
+    <div class="footer">⚠️ BIASAKAN UPS - UTAMAKAN PREDIKSI SENDIRI | Setiap market memiliki Invest Twin berbeda (contoh: 88/22/99, 11/55/33, dll) | Prediksi harian akurat</div>
 </div>
 
 <script>
-// ==================== 53 PASARAN LENGKAP (TANPA SPASI PADA TOTOMACAU) ====================
+// ==================== 53 PASARAN LENGKAP ====================
 const PASARAN = [
     "TOTOMACAU PAGI", "KENTUCKY MIDDAY", "FLORIDA MIDDAY", "HUAHIN 0100", "NEW YORK MIDDAY",
     "BANGKOK 0130", "CAROLINA DAY", "BRUNEI 02", "OREGON03", "OREGON06", "CALIFORNIA", "FLORIDA EVENING",
@@ -457,7 +554,7 @@ const PASARAN = [
 
 const SHIO = ["TIKUS", "KERBAU", "MACAN", "KELINCI", "NAGA", "ULAR", "KUDA", "KAMBING", "MONYET", "AYAM", "ANJING", "BABI"];
 
-// ==================== PREDIKSI KHUSUS TOTOMACAU 5D (STATIS) ====================
+// ========== KHUSUS TOTOMACAU 5D dengan Twin khusus ==========
 const PREDIKSI_KHUSUS = {
     "TOTOMACAU 5D SORE": {
         bbfs: "7574271",
@@ -485,20 +582,40 @@ const PREDIKSI_KHUSUS = {
     }
 };
 
-// Seed harian untuk generate random (pasaran lain)
-function getSeed() {
-    const t = new Date();
-    return t.getFullYear() * 366 + t.getMonth() * 32 + t.getDate();
+// Fungsi untuk menghasilkan Invest Twin yang berbeda untuk setiap pasaran
+// Format: XX/YY/ZZ dengan angka berbeda-beda
+function generateUniqueTwin(pasaran) {
+    const today = new Date();
+    const seedBase = today.getFullYear() * 366 + today.getMonth() * 32 + today.getDate();
+    let hash = 0;
+    for (let i = 0; i < pasaran.length; i++) {
+        hash = ((hash << 5) - hash) + pasaran.charCodeAt(i);
+        hash = hash & hash;
+    }
+    hash = Math.abs(hash);
+    const finalSeed = seedBase + hash;
+    
+    function getRand(offset, max) {
+        const val = ((finalSeed + offset) * 9301 + 49297) % 233280;
+        return Math.floor(val / 233280 * max);
+    }
+    
+    // Generate 3 angka twin yang berbeda (bisa sama atau beda, tapi unik per market)
+    let twinDigits = [];
+    for (let i = 0; i < 3; i++) {
+        let digit = getRand(i * 17 + 500, 10);
+        twinDigits.push(digit);
+    }
+    // Pastikan tidak membosankan, kadang buat variasi
+    const twin1 = `${twinDigits[0]}${twinDigits[0]}`;
+    const twin2 = `${twinDigits[1]}${twinDigits[1]}`;
+    const twin3 = `${twinDigits[2]}${twinDigits[2]}`;
+    return `${twin1}/${twin2}/${twin3}`;
 }
 
-function getNum(seed, max, offset) {
-    const val = ((seed + offset) * 9301 + 49297) % 233280;
-    return Math.floor(val / 233280 * max);
-}
-
-// Generate prediksi untuk pasaran biasa (random)
-function getPrediksiRandom(pasaran) {
-    const dailySeed = getSeed();
+// Generate prediksi random lengkap untuk pasaran biasa
+function getRandomPrediksi(pasaran) {
+    const dailySeed = getDailySeed();
     let hash = 0;
     for (let i = 0; i < pasaran.length; i++) {
         hash = ((hash << 5) - hash) + pasaran.charCodeAt(i);
@@ -507,57 +624,65 @@ function getPrediksiRandom(pasaran) {
     hash = Math.abs(hash);
     const baseSeed = dailySeed + hash;
     
-    let bbfsSet = new Set();
-    for (let i = 0; i < 30; i++) {
-        bbfsSet.add(getNum(baseSeed, 10, i * 2 + 100));
-        if (bbfsSet.size === 7) break;
+    function rng(offset, max) {
+        const v = ((baseSeed + offset) * 9301 + 49297) % 233280;
+        return Math.floor(v / 233280 * max);
     }
-    while (bbfsSet.size < 7) bbfsSet.add(getNum(baseSeed, 10, bbfsSet.size + 500));
-    let bbfs = Array.from(bbfsSet).sort((a,b)=>a-b).join('');
+    
+    // BBFS 7 digit
+    let bbfsSet = new Set();
+    for (let i = 0; i < 30; i++) bbfsSet.add(rng(i*2+100, 10));
+    while (bbfsSet.size < 7) bbfsSet.add(rng(bbfsSet.size+500, 10));
+    let bbfs = Array.from(bbfsSet).sort().join('');
     if (bbfs.length < 7) bbfs = bbfs.padEnd(7, '0');
     
+    // Angka Main 5 digit
     let mainSet = new Set();
-    for (let i = 0; i < 20; i++) mainSet.add(getNum(baseSeed, 10, i + 300));
+    for (let i = 0; i < 20; i++) mainSet.add(rng(i+300, 10));
     let mainArr = Array.from(mainSet).slice(0,5);
-    while (mainArr.length < 5) mainArr.push(getNum(baseSeed, 10, mainArr.length + 400));
+    while (mainArr.length < 5) mainArr.push(rng(mainArr.length+400, 10));
     let angkaMain = mainArr.join('');
     
+    // 4D (4 angka)
     let fourD = [];
     for (let i = 0; i < 4; i++) {
-        fourD.push(`${getNum(baseSeed, 10, i*5+500)}${getNum(baseSeed, 10, i*5+501)}${getNum(baseSeed, 10, i*5+502)}${getNum(baseSeed, 10, i*5+503)}`);
+        fourD.push(`${rng(i*5+500,10)}${rng(i*5+501,10)}${rng(i*5+502,10)}${rng(i*5+503,10)}`);
     }
-    
+    // 3D (4 angka)
     let threeD = [];
     for (let i = 0; i < 4; i++) {
-        threeD.push(`${getNum(baseSeed, 10, i*6+600)}${getNum(baseSeed, 10, i*6+601)}${getNum(baseSeed, 10, i*6+602)}`);
+        threeD.push(`${rng(i*6+600,10)}${rng(i*6+601,10)}${rng(i*6+602,10)}`);
     }
-    
+    // 2D (10 angka)
     let twoD = [];
     for (let i = 0; i < 10; i++) {
-        twoD.push(`${getNum(baseSeed, 10, i*7+700)}${getNum(baseSeed, 10, i*7+701)}`);
+        twoD.push(`${rng(i*7+700,10)}${rng(i*7+701,10)}`);
     }
-    
-    let colok = `${getNum(baseSeed, 10, 800)}/${getNum(baseSeed, 10, 801)}`;
-    let cb2d = [];
+    // Colok Bebas
+    let colok = `${rng(800,10)}/${rng(801,10)}`;
+    // Colok Bebas 2D
+    let cb2dArr = [];
     for (let i = 0; i < 3; i++) {
-        cb2d.push(`${getNum(baseSeed, 10, 900+i*3)}${getNum(baseSeed, 10, 901+i*3)}`);
+        cb2dArr.push(`${rng(900+i*3,10)}${rng(901+i*3,10)}`);
     }
-    let colok2d = cb2d.join('/');
-    
-    let s1 = getNum(baseSeed, 12, 1000);
-    let s2 = (s1 + getNum(baseSeed, 11, 1001) + 1) % 12;
-    let s3 = (s2 + getNum(baseSeed, 10, 1002) + 1) % 12;
+    let colok2d = cb2dArr.join('/');
+    // Colok Shio
+    let s1 = rng(1000,12);
+    let s2 = (s1 + rng(1001,11) + 1) % 12;
+    let s3 = (s2 + rng(1002,10) + 1) % 12;
     let shio = `${SHIO[s1]}/${SHIO[s2]}/${SHIO[s3]}`;
     
-    let t1 = getNum(baseSeed, 10, 1100);
-    let t2 = getNum(baseSeed, 10, 1101);
-    let t3 = getNum(baseSeed, 10, 1102);
-    let twin = `${t1}/${t2}${t2}/${t3}${t3}`;
+    // INVEST TWIN UNIK UNTUK MARKET INI (BERBEDA-BEDA)
+    const twinUnik = generateUniqueTwin(pasaran);
     
-    return { bbfs, angkaMain, fourD, threeD, twoD, colok, colok2d, shio, twin, isKhusus: false };
+    return { bbfs, angkaMain, fourD, threeD, twoD, colok, colok2d, shio, twin: twinUnik, isKhusus: false };
 }
 
-// Get prediksi berdasarkan pasaran (khusus atau random)
+function getDailySeed() {
+    const t = new Date();
+    return t.getFullYear() * 366 + t.getMonth() * 32 + t.getDate();
+}
+
 function getPrediksi(pasaran) {
     if (PREDIKSI_KHUSUS[pasaran]) {
         const k = PREDIKSI_KHUSUS[pasaran];
@@ -575,7 +700,7 @@ function getPrediksi(pasaran) {
             isKhusus: true
         };
     }
-    return getPrediksiRandom(pasaran);
+    return getRandomPrediksi(pasaran);
 }
 
 function getTanggal() {
@@ -595,7 +720,7 @@ function formatTeks(pasaran) {
     const tgl = getTanggal();
     let text = `Prediksi ${pasaran}\nHari ${tgl}\nBBFS KUAT: ${p.bbfs}\nAngka Main : ${p.angkaMain}`;
     if (p.isKhusus && p.angka5d) {
-        text += `\n5D  : ${p.angka5d.join(' ')}  `;
+        text += `\n5D  : ${p.angka5d.join(' ')}`;
     }
     text += `\n4D (BB): ${p.fourD.join(' ')}\n3D (BB) : ${p.threeD.join(' ')}\n2D (BB): ${p.twoD.join(' ')}\nColok Bebas : ${p.colok}\nColok bebas 2D : ${p.colok2d}\nColok Shio : ${p.shio}\nInvest Twin : ${p.twin}\nBiasakan UPS - UTAMAKAN PREDIKSI SENDIRI`;
     return text;
@@ -629,7 +754,7 @@ async function copy(text, msg) {
 function tampilkanSemua() {
     const stats = document.getElementById('searchStats');
     stats.style.display = 'block';
-    stats.innerHTML = `📊 Menampilkan <span>${PASARAN.length}</span> Pasaran (SEMUA PASARAN) | Khusus TOTOMACAU 5D SORE & MALAM prediksi spesial`;
+    stats.innerHTML = `📊 Menampilkan <span>${PASARAN.length}</span> Pasaran | SETIAP MARKET PUNYA INVEST TWIN BERBEDA (contoh: 88/22/99, 11/55/33, dll) | Khusus TOTOMACAU 5D prediksi spesial`;
     
     let html = `<div class="markets-grid">`;
     for (let i = 0; i < PASARAN.length; i++) {
@@ -644,10 +769,14 @@ function tampilkanSemua() {
                 <div class="market-row"><span class="market-row-label">BBFS KUAT:</span><span class="market-row-value">${p.bbfs}</span></div>
                 <div class="market-row"><span class="market-row-label">Angka Main:</span><span class="market-row-value">${p.angkaMain}</span></div>
                 ${p.isKhusus && p.angka5d ? `<div class="market-row"><span class="market-row-label">5D:</span><span class="market-row-value">${p.angka5d[0]} ${p.angka5d[1]}</span></div>` : ''}
-                <div class="market-row"><span class="market-row-label">4D:</span><span class="market-row-value">${p.fourD[0]} ${p.fourD[1]}</span></div>
-                <div class="market-row"><span class="market-row-label">3D:</span><span class="market-row-value">${p.threeD[0]} ${p.threeD[1]}</span></div>
+                <div class="market-row"><span class="market-row-label">4D (BB):</span><span class="market-row-value">${p.fourD[0]} ${p.fourD[1]} ${p.fourD[2]} ${p.fourD[3]}</span></div>
+                <div class="market-row"><span class="market-row-label">3D (BB):</span><span class="market-row-value">${p.threeD[0]} ${p.threeD[1]} ${p.threeD[2]} ${p.threeD[3]}</span></div>
                 <div class="market-row"><span class="market-row-label">2D Top 5:</span><span class="market-row-value">${p.twoD.slice(0,5).join(' ')}</span></div>
-                <div class="market-row"><span class="market-row-label">Colok:</span><span class="market-row-value">${p.colok} | ${p.colok2d}</span></div>
+                <div class="market-row"><span class="market-row-label">Colok Bebas:</span><span class="market-row-value">${p.colok}</span></div>
+                <div class="market-row"><span class="market-row-label">Colok 2D:</span><span class="market-row-value">${p.colok2d}</span></div>
+                <div class="twin-highlight">
+                    <div class="market-row"><span class="market-row-label">🔮 Invest Twin :</span><span class="market-row-value twin-text">${p.twin}</span></div>
+                </div>
             </div>
         </div>`;
     }
@@ -677,7 +806,7 @@ function cariPasaran() {
     if (hasil.length === 0) {
         stats.style.display = 'block';
         stats.innerHTML = `🔍 <span>0</span> pasaran ditemukan. Coba kata kunci lain.`;
-        document.getElementById('contentArea').innerHTML = `<div class="empty-search">😢 Tidak ada pasaran yang cocok dengan "<strong>${keyword}</strong>"<br><br>💡 Coba: TOTOMACAU, SYDNEY, HONGKONG, atau klik tombol TAMPILKAN ALL</div>`;
+        document.getElementById('contentArea').innerHTML = `<div class="empty-search">😢 Tidak ada pasaran yang cocok dengan "<strong>${keyword}</strong>"<br><br>💡 Coba: KENTUCKY, SYDNEY, HONGKONG, atau klik TAMPILKAN ALL</div>`;
         return;
     }
     
@@ -696,7 +825,7 @@ function cariPasaran() {
         <div class="single-card">
             <div class="single-header">
                 <div><h2>🎯 ${hasil[0]}</h2><div class="date">📅 ${tgl} | ${jam}</div></div>
-                <button id="copySingleBtn" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border:none;padding:10px 20px;border-radius:40px;font-weight:bold;cursor:pointer;">📋 COPY PREDIKSI</button>
+                <button id="copySingleBtn" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);border:none;padding:10px 20px;border-radius:40px;font-weight:bold;">📋 COPY PREDIKSI</button>
             </div>
             <div class="prediction-grid">
                 <div class="pred-item"><div class="pred-label">BBFS KUAT</div><div class="pred-value">${p.bbfs}</div></div>
@@ -708,13 +837,13 @@ function cariPasaran() {
                 <div class="pred-item"><div class="pred-label">Colok Bebas</div><div class="pred-value">${p.colok}</div></div>
                 <div class="pred-item"><div class="pred-label">Colok Bebas 2D</div><div class="pred-value">${p.colok2d}</div></div>
                 <div class="pred-item"><div class="pred-label">Colok Shio</div><div class="pred-value">${p.shio}</div></div>
-                <div class="pred-item"><div class="pred-label">Invest Twin</div><div class="pred-value">${p.twin}</div></div>
+                <div class="pred-item" style="border-left-color:#ffaa44; background:#2a1f0a;"><div class="pred-label">⚡ INVEST TWIN (BERBEDA TIAP PASARAN)</div><div class="pred-value" style="font-size:1.4rem;">${p.twin}</div></div>
             </div>
         </div>`;
         document.getElementById('copySingleBtn').onclick = () => copy(formatTeks(hasil[0]), `Prediksi ${hasil[0]} disalin!`);
     } else {
         stats.style.display = 'block';
-        stats.innerHTML = `🔍 Menampilkan <span>${hasil.length}</span> pasaran dari total ${PASARAN.length} (pencarian: ${keyword})`;
+        stats.innerHTML = `🔍 Menampilkan <span>${hasil.length}</span> pasaran (pencarian: ${keyword}) | Setiap market punya Invest Twin berbeda`;
         
         let html = `<div class="markets-grid">`;
         for (let i = 0; i < hasil.length; i++) {
@@ -729,9 +858,8 @@ function cariPasaran() {
                     <div class="market-row"><span class="market-row-label">BBFS KUAT:</span><span class="market-row-value">${p.bbfs}</span></div>
                     <div class="market-row"><span class="market-row-label">Angka Main:</span><span class="market-row-value">${p.angkaMain}</span></div>
                     ${p.isKhusus && p.angka5d ? `<div class="market-row"><span class="market-row-label">5D:</span><span class="market-row-value">${p.angka5d[0]} ${p.angka5d[1]}</span></div>` : ''}
-                    <div class="market-row"><span class="market-row-label">4D:</span><span class="market-row-value">${p.fourD[0]}</span></div>
-                    <div class="market-row"><span class="market-row-label">3D:</span><span class="market-row-value">${p.threeD[0]}</span></div>
-                    <div class="market-row"><span class="market-row-label">2D Top 5:</span><span class="market-row-value">${p.twoD.slice(0,5).join(' ')}</span></div>
+                    <div class="market-row"><span class="market-row-label">4D (BB):</span><span class="market-row-value">${p.fourD[0]} ${p.fourD[1]}</span></div>
+                    <div class="twin-highlight"><span class="market-row-label">🔮 Invest Twin :</span><span class="twin-text">${p.twin}</span></div>
                 </div>
             </div>`;
         }
@@ -781,12 +909,11 @@ document.addEventListener('DOMContentLoaded', () => {
             semuaTeks += formatTeks(PASARAN[i]);
             if (i < PASARAN.length - 1) semuaTeks += '\n\n';
         }
-        copy(semuaTeks, 'Semua 53 pasaran berhasil disalin!');
+        copy(semuaTeks, 'Semua 53 pasaran + Invest Twin berhasil disalin!');
     };
     
     updateJam();
     setInterval(updateJam, 1000);
-    
     tampilkanSemua();
 });
 </script>
