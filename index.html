@@ -683,7 +683,7 @@ button:hover {
 
     <div id="searchStats" class="search-stats"></div>
     <div id="contentArea"></div>
-    <div class="footer">⚠️ BIASAKAN UPS - UTAMAKAN PREDIKSI SENDIRI | Setiap market memiliki Invest Twin berbeda (contoh: 88/22/99, 11/55/33, dll) | Prediksi harian akurat</div>
+    <div class="footer">⚠️ BIASAKAN UPS - UTAMAKAN PREDIKSI SENDIRI | Setiap market memiliki Invest Twin berbeda (contoh: 88/99/00, 11/55/33, dll) | Prediksi harian akurat</div>
 </div>
 
 <script>
@@ -701,7 +701,7 @@ const PASARAN = [
 
 const SHIO = ["TIKUS", "KERBAU", "MACAN", "KELINCI", "NAGA", "ULAR", "KUDA", "KAMBING", "MONYET", "AYAM", "ANJING", "BABI"];
 
-// ========== SEMUA BERUBAH TIAP 30 DETIK ==========
+// ========== SEED 30 DETIK ==========
 function getSlotSeed() {
     return Math.floor(Date.now() / 30000);
 }
@@ -720,92 +720,121 @@ function hashPasaran(pasaran) {
     return Math.abs(hash);
 }
 
+// ========== INVEST TWIN — UNIK 100% PER PASARAN ==========
+// Dari 10 twin (00-99), ambil 3 = C(10,3) = 120 kombinasi unik
+// Cukup untuk 53 pasaran, danacak tiap 30 detik
+const ALL_TWIN_DIGITS = ['00','11','22','33','44','55','66','77','88','99'];
+
+function generateAllTwinCombinations() {
+    let combos = [];
+    for (let i = 0; i < ALL_TWIN_DIGITS.length; i++) {
+        for (let j = i + 1; j < ALL_TWIN_DIGITS.length; j++) {
+            for (let k = j + 1; k < ALL_TWIN_DIGITS.length; k++) {
+                combos.push([ALL_TWIN_DIGITS[i], ALL_TWIN_DIGITS[j], ALL_TWIN_DIGITS[k]]);
+            }
+        }
+    }
+    return combos;
+}
+
+// Shuffle array dengan seed deterministik
+function shuffleWithSeed(arr, seed) {
+    let a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = seededRNG(seed, i * 7 + 99999, i + 1);
+        const tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+    return a;
+}
+
+// Cache twin map per slot seed agar konsisten dalam 1 siklus
+let cachedTwinMap = null;
+let cachedTwinSeed = -1;
+
+function getUniqueTwinForIndex(pasaranIndex) {
+    const seed = getSlotSeed();
+    if (seed !== cachedTwinSeed) {
+        cachedTwinSeed = seed;
+        const combos = generateAllTwinCombinations();
+        const shuffled = shuffleWithSeed(combos, seed);
+        cachedTwinMap = {};
+        for (let i = 0; i < PASARAN.length; i++) {
+            // Shuffle ulang internal tiap combo supaya urutannya juga acak (88/99/00 vs 00/88/99 beda)
+            const combo = shuffled[i % shuffled.length];
+            const innerShuffled = shuffleWithSeed(combo, seed + i * 777);
+            cachedTwinMap[i] = innerShuffled.join('/');
+        }
+    }
+    return cachedTwinMap[pasaranIndex] || '00/11/22';
+}
+
 // ========== GENERATE PREDIKSI ==========
-// Semua angka + shio berubah tiap 30 detik
-// Setiap pasaran 100% berbeda BBFS-nya
 function getPrediksi(pasaran) {
     const idx = PASARAN.indexOf(pasaran);
     const seed = getSlotSeed();
-    // Channel unik per pasaran — dipisah sangat jauh
     const channel = idx * 9973;
     const hash = hashPasaran(pasaran);
     const base = seed + channel + hash;
 
     function rng(off, max) { return seededRNG(base, off, max); }
 
-    // ========== BBFS 7 DIGIT — DIACAK TIDAK DIURUTKAN ==========
-    // Supaya setiap pasaran benar-benar beda susunan BBFS-nya
+    // BBFS 7 digit — diacak, tidak diurutkan
     let bbfsDigits = [];
     let usedDigits = {};
     for (let i = 0; i < 15; i++) {
         let d = rng(i * 7 + 100, 10);
-        if (!usedDigits[d]) {
-            usedDigits[d] = true;
-            bbfsDigits.push(d);
-        }
+        if (!usedDigits[d]) { usedDigits[d] = true; bbfsDigits.push(d); }
         if (bbfsDigits.length >= 7) break;
     }
-    // Kalau belum 7, tambah pakai offset berbeda
     let fallback = 0;
     while (bbfsDigits.length < 7) {
         let d = rng(9000 + fallback * 3, 10);
-        if (!usedDigits[d]) {
-            usedDigits[d] = true;
-            bbfsDigits.push(d);
-        }
+        if (!usedDigits[d]) { usedDigits[d] = true; bbfsDigits.push(d); }
         fallback++;
     }
-    // SHUFFLE — jangan di-sort, biar susunan berbeda tiap pasaran
     for (let i = bbfsDigits.length - 1; i > 0; i--) {
         const j = rng(5000 + i * 13, i + 1);
-        const tmp = bbfsDigits[i];
-        bbfsDigits[i] = bbfsDigits[j];
-        bbfsDigits[j] = tmp;
+        const tmp = bbfsDigits[i]; bbfsDigits[i] = bbfsDigits[j]; bbfsDigits[j] = tmp;
     }
     const bbfs = bbfsDigits.join('');
 
-    // ========== ANGKA MAIN 5 DIGIT ==========
+    // Angka Main 5 digit
     let mainSet = new Set();
     for (let i = 0; i < 25; i++) mainSet.add(rng(i * 4 + 500, 10));
     let mainArr = Array.from(mainSet).slice(0, 5);
     while (mainArr.length < 5) mainArr.push(rng(mainArr.length + 800, 10));
     const angkaMain = mainArr.join('');
 
-    // ========== 4D — 4 ANGKA ==========
+    // 4D
     let fourD = [];
-    for (let i = 0; i < 4; i++) {
-        fourD.push(rng(1000+i*11,10)+''+rng(1001+i*11,10)+''+rng(1002+i*11,10)+''+rng(1003+i*11,10));
-    }
+    for (let i = 0; i < 4; i++) fourD.push(rng(1000+i*11,10)+''+rng(1001+i*11,10)+''+rng(1002+i*11,10)+''+rng(1003+i*11,10));
 
-    // ========== 3D — 4 ANGKA ==========
+    // 3D
     let threeD = [];
-    for (let i = 0; i < 4; i++) {
-        threeD.push(rng(1500+i*13,10)+''+rng(1501+i*13,10)+''+rng(1502+i*13,10));
-    }
+    for (let i = 0; i < 4; i++) threeD.push(rng(1500+i*13,10)+''+rng(1501+i*13,10)+''+rng(1502+i*13,10));
 
-    // ========== 2D — 10 ANGKA ==========
+    // 2D
     let twoD = [];
-    for (let i = 0; i < 10; i++) {
-        twoD.push(rng(2000+i*17,10)+''+rng(2001+i*17,10));
-    }
+    for (let i = 0; i < 10; i++) twoD.push(rng(2000+i*17,10)+''+rng(2001+i*17,10));
 
-    // ========== COLOK BEBAS ==========
+    // Colok Bebas
     const colok = rng(3000,10)+'/'+rng(3001,10);
 
-    // ========== COLOK BEBAS 2D ==========
+    // Colok Bebas 2D
     const colok2d = rng(3500,10)+''+rng(3501,10)+'/'+rng(3502,10)+''+rng(3503,10)+'/'+rng(3504,10)+''+rng(3505,10);
 
-    // ========== COLOK SHIO — BERUBAH TIAP 30 DETIK ==========
+    // Colok Shio — berubah tiap 30 detik
     let s1 = rng(4000, 12);
     let s2 = (s1 + rng(4001, 11) + 1) % 12;
     let s3 = (s2 + rng(4002, 10) + 1) % 12;
     const shio = SHIO[s1]+'/'+SHIO[s2]+'/'+SHIO[s3];
 
-    // ========== INVEST TWIN ==========
-    let td = [rng(6000,10), rng(6001,10), rng(6002,10)];
-    const twin = td[0]+''+td[0]+'/'+td[1]+''+td[1]+'/'+td[2]+''+td[2];
+    // Invest Twin — unik per pasaran, format 88/99/00
+    const twin = getUniqueTwinForIndex(idx);
 
-    // ========== KHUSUS TOTOMACAU 5D ==========
+    // Khusus TOTOMACAU 5D
     let isKhusus = false;
     let angka5d = null;
     if (pasaran === "TOTOMACAU 5D SORE" || pasaran === "TOTOMACAU 5D MALAM") {
@@ -878,7 +907,6 @@ function triggerChangeFlash() {
     setTimeout(function(){ overlay.classList.remove('active'); }, 300);
 }
 
-// ========== COUNTDOWN 30 DETIK ==========
 function updateCountdown() {
     const now = new Date();
     const secInSlot = now.getSeconds() % 30;
@@ -927,7 +955,7 @@ function tampilkanSemua(isRefresh) {
     const stats = document.getElementById('searchStats');
     stats.style.display = 'block';
     const badge = isRefresh ? '<span class="change-badge">BARU!</span>' : '';
-    stats.innerHTML = '📊 Menampilkan <span>'+PASARAN.length+'</span> Pasaran '+badge+'| SETIAP PASARAN BBFS BERBEDA | Semua angka & shio berubah tiap 30 detik';
+    stats.innerHTML = '📊 Menampilkan <span>'+PASARAN.length+'</span> Pasaran '+badge+'| SETIAP PASARAN INVEST TWIN UNIK | Semua berubah tiap 30 detik';
 
     let html = '<div class="markets-grid">';
     for (let i = 0; i < PASARAN.length; i++) {
@@ -992,7 +1020,7 @@ function tampilkanSingle(market, isRefresh) {
         '<div class="pred-item"><div class="pred-label">Colok Bebas</div><div class="pred-value angka-dinamis'+glow+'">'+p.colok+'</div></div>' +
         '<div class="pred-item"><div class="pred-label">Colok Bebas 2D</div><div class="pred-value angka-dinamis'+glow+'">'+p.colok2d+'</div></div>' +
         '<div class="pred-item"><div class="pred-label">Colok Shio</div><div class="pred-value angka-dinamis'+glow+'">'+p.shio+'</div></div>' +
-        '<div class="pred-item" style="border-left-color:#ffaa44; background:#2a1f0a;"><div class="pred-label">⚡ INVEST TWIN</div><div class="pred-value angka-dinamis'+glow+'" style="font-size:1.4rem;">'+p.twin+'</div></div>' +
+        '<div class="pred-item" style="border-left-color:#ffaa44; background:#2a1f0a;"><div class="pred-label">⚡ INVEST TWIN (UNIK PER PASARAN)</div><div class="pred-value angka-dinamis'+glow+'" style="font-size:1.4rem;">'+p.twin+'</div></div>' +
         '</div></div>';
 
     document.getElementById('copySingleBtn').onclick = function(){
@@ -1021,7 +1049,7 @@ function cariPasaranForce(keyword, isRefresh) {
         currentSearchKeyword = keyword;
         const badge = isRefresh ? '<span class="change-badge">BARU!</span>' : '';
         stats.style.display = 'block';
-        stats.innerHTML = '🔍 Menampilkan <span>'+hasil.length+'</span> pasaran '+badge+'| Setiap market punya Invest Twin berbeda';
+        stats.innerHTML = '🔍 Menampilkan <span>'+hasil.length+'</span> pasaran '+badge+'| Setiap market punya Invest Twin unik';
 
         let html = '<div class="markets-grid">';
         for (let i = 0; i < hasil.length; i++) {
