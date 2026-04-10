@@ -19,12 +19,319 @@ body {
     position: relative;
 }
 
-.container {
-    max-width: 1400px;
+.main-layout {
+    display: flex;
+    gap: 24px;
+    max-width: 1600px;
     margin: 0 auto;
     position: relative;
     z-index: 2;
 }
+
+.left-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.right-note {
+    width: 340px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+    max-height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+}
+
+.keep-search {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(251,191,36,0.2);
+}
+
+.keep-search svg { width: 16px; height: 16px; fill: #64748b; flex-shrink: 0; }
+
+.keep-search input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: #e2e8f0;
+    font-size: 13px;
+    font-family: inherit;
+}
+
+.keep-search input::placeholder { color: #475569; }
+
+.keep-add-btn {
+    width: 100%;
+    background: #1e293b;
+    border: 1px dashed rgba(251,191,36,0.3);
+    border-radius: 12px;
+    padding: 10px;
+    color: #fbbf24;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.keep-add-btn:hover { background: rgba(251,191,36,0.08); border-color: #fbbf24; }
+.keep-add-btn svg { width: 18px; height: 18px; fill: #fbbf24; }
+
+.keep-form-wrap { display: none; margin-bottom: 12px; }
+.keep-form-wrap.open { display: block; }
+
+.keep-form {
+    background: #fef3c7;
+    border-radius: 8px;
+    padding: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.keep-form input,
+.keep-form textarea {
+    width: 100%;
+    border: none;
+    background: none;
+    outline: none;
+    font-family: inherit;
+    color: #78350f;
+    resize: none;
+}
+
+.keep-form input { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.keep-form input::placeholder { color: #b45309; opacity: 0.5; }
+.keep-form textarea { font-size: 13px; line-height: 1.6; min-height: 80px; }
+.keep-form textarea::placeholder { color: #b45309; opacity: 0.5; }
+
+.keep-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(146,64,14,0.15);
+}
+
+.keep-form-left { display: flex; align-items: center; gap: 6px; }
+
+.keep-color-pick {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.keep-color-pick:hover { transform: scale(1.15); }
+.keep-color-pick.active { border-color: #78350f; }
+
+.keep-form-right { display: flex; align-items: center; gap: 4px; }
+
+.keep-btn-save {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.15s;
+    font-family: inherit;
+}
+
+.keep-btn-save:hover { background: rgba(146,64,14,0.1); }
+.keep-btn-save svg { width: 20px; height: 20px; fill: #92400e; }
+.keep-btn-save span { font-size: 12px; color: #92400e; font-weight: 600; }
+
+.keep-btn-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+}
+
+.keep-btn-close:hover { background: rgba(146,64,14,0.1); }
+.keep-btn-close svg { width: 20px; height: 20px; fill: #92400e; }
+
+.keep-list {
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(251,191,36,0.3) transparent;
+}
+
+.keep-list::-webkit-scrollbar { width: 4px; }
+.keep-list::-webkit-scrollbar-track { background: transparent; }
+.keep-list::-webkit-scrollbar-thumb { background: rgba(251,191,36,0.3); border-radius: 10px; }
+
+.keep-note {
+    border-radius: 8px;
+    padding: 14px 14px 10px;
+    margin-bottom: 10px;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    transition: box-shadow 0.2s;
+}
+
+.keep-note:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+
+.keep-note::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--nc-strip);
+    border-radius: 8px 8px 0 0;
+}
+
+.keep-note-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--nc-title);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--nc-border);
+    line-height: 1.3;
+    padding-right: 24px;
+    word-break: break-word;
+}
+
+.keep-note-body {
+    font-size: 12.5px;
+    color: var(--nc-body);
+    line-height: 1.65;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.keep-note-footer {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--nc-border);
+    font-size: 11px;
+    color: var(--nc-footer);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.keep-note-saved {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    color: var(--nc-footer);
+    opacity: 0.7;
+}
+
+.keep-note-saved svg { width: 12px; height: 12px; fill: var(--nc-footer); }
+
+.keep-note-actions {
+    display: flex;
+    gap: 1px;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.keep-note:hover .keep-note-actions { opacity: 1; }
+
+.keep-note-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    position: relative;
+}
+
+.keep-note-btn:hover { background: var(--nc-close-bg); }
+.keep-note-btn svg { width: 14px; height: 14px; fill: var(--nc-close); }
+
+.keep-note-btn::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e293b;
+    color: #e2e8f0;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 5px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.keep-note-btn:hover::after { opacity: 1; }
+.keep-note-btn.copied svg { fill: #16a34a; }
+
+.keep-empty { text-align: center; padding: 30px 16px; color: #475569; font-size: 13px; }
+.keep-count { font-size: 11px; color: #475569; text-align: center; padding: 6px 0; }
+
+.keep-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 100000;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: keepToastAnim 2.5s ease forwards;
+    border: 1px solid rgba(251,191,36,0.3);
+}
+
+.keep-toast.warn { border-color: rgba(239,68,68,0.4); }
+.keep-toast.warn svg { fill: #f87171; }
+
+.keep-toast svg { width: 16px; height: 16px; fill: #fbbf24; flex-shrink: 0; }
+
+@keyframes keepToastAnim {
+    0% { opacity: 0; transform: translateX(-50%) translateY(16px); }
+    12% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    82% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(16px); }
+}
+
+.container { position: relative; z-index: 2; }
 
 .ellen-header {
     text-align: center;
@@ -62,14 +369,11 @@ body {
 
 .lightning-effect {
     position: absolute;
-    top: -50%;
-    left: 0;
-    width: 2px;
-    height: 100%;
+    top: -50%; left: 0;
+    width: 2px; height: 100%;
     background: linear-gradient(to bottom, cyan, rgba(0,255,255,0));
     animation: strikeRandom 1.5s infinite;
-    z-index: 1;
-    opacity: 0;
+    z-index: 1; opacity: 0;
 }
 
 @keyframes strikeRandom {
@@ -79,14 +383,11 @@ body {
 
 .flash-effect {
     position: absolute;
-    top: 0;
-    left: -50%;
-    width: 200%;
-    height: 100%;
+    top: 0; left: -50%;
+    width: 200%; height: 100%;
     background: rgba(0,255,255,0.2);
     animation: flashAnim 2s infinite;
-    pointer-events: none;
-    z-index: 0;
+    pointer-events: none; z-index: 0;
 }
 
 @keyframes flashAnim {
@@ -94,24 +395,13 @@ body {
     95% { opacity: 0.5; }
 }
 
-.subtitle {
-    font-size: 18px;
-    color: #66ccff;
-    margin-top: 10px;
-    text-shadow: 0 0 5px #00ccff;
-    letter-spacing: 2px;
-}
+.subtitle { font-size: 18px; color: #66ccff; margin-top: 10px; text-shadow: 0 0 5px #00ccff; letter-spacing: 2px; }
 
 .header-box {
-    width: 100%;
-    margin: 0 auto 30px auto;
-    padding: 20px;
-    border-radius: 40px;
-    text-align: center;
-    background: #020617;
+    width: 100%; margin: 0 auto 30px auto; padding: 20px; border-radius: 40px;
+    text-align: center; background: #020617;
     box-shadow: 0 0 10px #00aaff, 0 0 20px #00ccff;
-    animation: glowPulse 2s infinite alternate;
-    position: relative;
+    animation: glowPulse 2s infinite alternate; position: relative;
 }
 
 @keyframes glowPulse {
@@ -120,12 +410,10 @@ body {
 }
 
 .rainbow-text {
-    font-size: 32px;
-    font-weight: bold;
+    font-size: 32px; font-weight: bold;
     background: linear-gradient(90deg, red, orange, yellow, lime, cyan, blue, violet);
     background-size: 300%;
-    -webkit-background-clip: text;
-    background-clip: text;
+    -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: rainbowMove 4s linear infinite;
 }
@@ -135,23 +423,8 @@ body {
     100% { background-position: 300%; }
 }
 
-.lights {
-    position: absolute;
-    top: -12px;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-}
-
-.lights span {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    animation: blink 1.5s infinite alternate;
-}
-
+.lights { position: absolute; top: -12px; left: 0; width: 100%; display: flex; justify-content: center; gap: 12px; }
+.lights span { width: 12px; height: 12px; border-radius: 50%; animation: blink 1.5s infinite alternate; }
 .lights span:nth-child(1) { background: red; }
 .lights span:nth-child(2) { background: orange; animation-delay: 0.2s; }
 .lights span:nth-child(3) { background: yellow; animation-delay: 0.4s; }
@@ -165,442 +438,80 @@ body {
     100% { opacity: 1; transform: scale(1.6); }
 }
 
-.running-light {
-    margin-top: 15px;
-    height: 3px;
-    width: 100%;
-    background: linear-gradient(90deg, transparent, cyan, transparent);
-    background-size: 200px;
-    animation: moveLight 2s linear infinite;
-}
+.running-light { margin-top: 15px; height: 3px; width: 100%; background: linear-gradient(90deg, transparent, cyan, transparent); background-size: 200px; animation: moveLight 2s linear infinite; }
+@keyframes moveLight { 0% { background-position: -200px; } 100% { background-position: 200px; } }
 
-@keyframes moveLight {
-    0% { background-position: -200px; }
-    100% { background-position: 200px; }
-}
+.header h1 { font-size: 1.2rem; background: linear-gradient(135deg, #facc15, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; text-align: center; margin-bottom: 20px; }
 
-.header h1 {
-    font-size: 1.2rem;
-    background: linear-gradient(135deg, #facc15, #f59e0b);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-align: center;
-    margin-bottom: 20px;
-}
+.countdown-bar-wrap { background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 40px; padding: 12px 24px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 15px; border: 1px solid rgba(251,191,36,0.4); flex-wrap: wrap; }
+.countdown-label { color: #fbbf24; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; }
+.countdown-digits { display: flex; gap: 4px; align-items: center; }
+.cd-num { background: #0f172a; border: 2px solid #fbbf24; color: #fde047; font-size: 1.5rem; font-weight: 900; width: 40px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-variant-numeric: tabular-nums; transition: transform 0.15s, border-color 0.3s; }
+.cd-num.pulse { transform: scale(1.15); border-color: #ff4444; color: #ff6666; }
+.countdown-progress { flex: 1; min-width: 100px; max-width: 300px; height: 8px; background: #0f172a; border-radius: 10px; overflow: hidden; border: 1px solid rgba(251,191,36,0.3); }
+.countdown-progress-fill { height: 100%; background: linear-gradient(90deg, #fbbf24, #f59e0b, #ef4444); border-radius: 10px; transition: width 1s linear; }
+.countdown-cycle { color: #94a3b8; font-size: 0.75rem; }
 
-.countdown-bar-wrap {
-    background: linear-gradient(135deg, #1e293b, #0f172a);
-    border-radius: 40px;
-    padding: 12px 24px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    border: 1px solid rgba(251,191,36,0.4);
-    flex-wrap: wrap;
-}
+.change-flash-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(251,191,36,0.15); pointer-events: none; z-index: 9999; opacity: 0; transition: opacity 0.15s; }
+.change-flash-overlay.active { opacity: 1; }
 
-.countdown-label {
-    color: #fbbf24;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-}
+@keyframes numberPop { 0% { transform: scale(0.7); opacity: 0; filter: blur(4px); } 50% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; filter: blur(0); } }
+.angka-fresh { animation: numberPop 0.5s ease-out; }
 
-.countdown-digits {
-    display: flex;
-    gap: 4px;
-    align-items: center;
-}
+.change-badge { display: inline-block; background: linear-gradient(135deg, #ef4444, #f59e0b); color: white; font-size: 0.6rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-left: 8px; animation: badgePulse 1s ease infinite; vertical-align: middle; }
+@keyframes badgePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-.cd-num {
-    background: #0f172a;
-    border: 2px solid #fbbf24;
-    color: #fde047;
-    font-size: 1.5rem;
-    font-weight: 900;
-    width: 40px;
-    height: 50px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-variant-numeric: tabular-nums;
-    transition: transform 0.15s, border-color 0.3s;
-}
+.control-panel { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); border-radius: 20px; padding: 20px; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; justify-content: space-between; border: 1px solid rgba(251, 191, 36, 0.4); }
+.search-group { flex: 2; min-width: 220px; }
+.search-group input { width: 100%; background: #0f172a; border: 1px solid #fbbf24; padding: 10px 20px; border-radius: 40px; color: white; font-size: 14px; outline: none; }
+.select-group { display: flex; align-items: center; gap: 15px; }
+.select-group label { color: #fbbf24; font-weight: 600; }
+select { background: #0f172a; border: 1px solid #fbbf24; padding: 10px 20px; border-radius: 40px; color: white; font-size: 14px; cursor: pointer; min-width: 220px; }
+.btn-group { display: flex; gap: 10px; }
 
-.cd-num.pulse {
-    transform: scale(1.15);
-    border-color: #ff4444;
-    color: #ff6666;
-}
+button { background: linear-gradient(135deg, #fbbf24, #f59e0b); border: none; padding: 10px 20px; border-radius: 40px; font-weight: bold; cursor: pointer; transition: all 0.3s; font-size: 14px; }
+button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191, 36, 0.4); }
+.btn-all { background: linear-gradient(135deg, #3b82f6, #1e40af); color: white; }
+.btn-show-all { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+.date-info { background: linear-gradient(135deg, #1e293b, #0f172a); padding: 8px 16px; border-radius: 40px; color: #fbbf24; font-size: 14px; font-weight: 600; white-space: nowrap; }
+.search-stats { background: rgba(0, 0, 0, 0.5); border-radius: 40px; padding: 8px 20px; margin-bottom: 20px; color: #cbd5e1; font-size: 0.85rem; text-align: center; }
+.search-stats span { color: #fbbf24; font-weight: bold; }
 
-.countdown-progress {
-    flex: 1;
-    min-width: 100px;
-    max-width: 300px;
-    height: 8px;
-    background: #0f172a;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid rgba(251,191,36,0.3);
-}
+.markets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; }
+.market-item { background: rgba(15, 23, 42, 0.9); border-radius: 20px; border: 1px solid rgba(251, 191, 36, 0.3); overflow: hidden; transition: transform 0.2s; }
+.market-item:hover { transform: translateY(-3px); border-color: #fbbf24; }
+.market-header { background: rgba(0, 0, 0, 0.6); padding: 12px 15px; border-bottom: 1px solid rgba(251, 191, 36, 0.4); display: flex; justify-content: space-between; align-items: center; }
+.market-name { color: #fbbf24; font-weight: bold; font-size: 0.95rem; }
+.market-content { padding: 12px 15px; }
+.market-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.8rem; flex-wrap: wrap; gap: 5px; }
+.market-row-label { color: #94a3b8; font-weight: 500; }
+.market-row-value { color: #fde047; font-weight: 600; word-break: break-word; text-align: right; max-width: 65%; }
+.angka-dinamis { color: #4ade80; transition: color 0.3s; }
+.angka-dinamis.fresh-glow { color: #fde047; text-shadow: 0 0 8px rgba(251,191,36,0.6); }
+.twin-highlight { background: rgba(251, 191, 36, 0.2); border-left: 3px solid #fbbf24; padding: 8px 10px; border-radius: 12px; margin-top: 8px; }
+.twin-text { font-weight: bold; color: #ffd966; font-size: 1rem; letter-spacing: 1px; }
 
-.countdown-progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #fbbf24, #f59e0b, #ef4444);
-    border-radius: 10px;
-    transition: width 1s linear;
-}
+.single-card { background: rgba(15, 23, 42, 0.95); border-radius: 28px; border: 1px solid #fbbf24; overflow: hidden; }
+.single-header { background: linear-gradient(135deg, #1e293b, #0f172a); padding: 20px; border-bottom: 1px solid #fbbf24; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+.single-header h2 { color: #fbbf24; font-size: 1.5rem; }
+.prediction-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; padding: 20px; }
+.pred-item { background: rgba(0, 0, 0, 0.4); border-radius: 16px; padding: 15px; border-left: 3px solid #fbbf24; }
+.pred-label { color: #fbbf24; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
+.pred-value { color: #fde047; font-size: 1.1rem; font-weight: bold; word-break: break-word; }
+.pred-value.angka-dinamis { color: #4ade80; }
+.pred-value.angka-dinamis.fresh-glow { color: #fde047; text-shadow: 0 0 8px rgba(251,191,36,0.6); }
+.number-badge { display: inline-block; background: #1e293b; padding: 4px 10px; border-radius: 20px; margin: 3px; font-size: 0.85rem; }
 
-.countdown-cycle {
-    color: #94a3b8;
-    font-size: 0.75rem;
-}
+.footer { text-align: center; margin-top: 30px; padding: 15px; color: #64748b; font-size: 0.7rem; border-top: 1px solid rgba(251, 191, 36, 0.2); }
+.toast { position: fixed; bottom: 30px; right: 30px; background: #22c55e; color: white; padding: 12px 24px; border-radius: 40px; font-weight: bold; z-index: 10000; animation: fadeInOut 2.5s ease forwards; }
+@keyframes fadeInOut { 0% { opacity: 0; transform: translateY(20px); } 15% { opacity: 1; transform: translateY(0); } 85% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(20px); } }
+.empty-search { text-align: center; padding: 50px; background: rgba(0,0,0,0.3); border-radius: 40px; color: #94a3b8; border: 1px dashed #fbbf24; }
 
-.change-flash-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(251,191,36,0.15);
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0;
-    transition: opacity 0.15s;
-}
+#bg-video { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -1; object-fit: cover; opacity: 0.3; }
 
-.change-flash-overlay.active {
-    opacity: 1;
-}
-
-@keyframes numberPop {
-    0% { transform: scale(0.7); opacity: 0; filter: blur(4px); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); opacity: 1; filter: blur(0); }
-}
-
-.angka-fresh {
-    animation: numberPop 0.5s ease-out;
-}
-
-.change-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, #ef4444, #f59e0b);
-    color: white;
-    font-size: 0.6rem;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-weight: 700;
-    margin-left: 8px;
-    animation: badgePulse 1s ease infinite;
-    vertical-align: middle;
-}
-
-@keyframes badgePulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
-.control-panel {
-    background: rgba(30, 41, 59, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid rgba(251, 191, 36, 0.4);
-}
-
-.search-group {
-    flex: 2;
-    min-width: 220px;
-}
-
-.search-group input {
-    width: 100%;
-    background: #0f172a;
-    border: 1px solid #fbbf24;
-    padding: 10px 20px;
-    border-radius: 40px;
-    color: white;
-    font-size: 14px;
-    outline: none;
-}
-
-.select-group {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.select-group label {
-    color: #fbbf24;
-    font-weight: 600;
-}
-
-select {
-    background: #0f172a;
-    border: 1px solid #fbbf24;
-    padding: 10px 20px;
-    border-radius: 40px;
-    color: white;
-    font-size: 14px;
-    cursor: pointer;
-    min-width: 220px;
-}
-
-.btn-group {
-    display: flex;
-    gap: 10px;
-}
-
-button {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-size: 14px;
-}
-
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(251, 191, 36, 0.4);
-}
-
-.btn-all {
-    background: linear-gradient(135deg, #3b82f6, #1e40af);
-    color: white;
-}
-
-.btn-show-all {
-    background: linear-gradient(135deg, #10b981, #059669);
-    color: white;
-}
-
-.date-info {
-    background: linear-gradient(135deg, #1e293b, #0f172a);
-    padding: 8px 16px;
-    border-radius: 40px;
-    color: #fbbf24;
-    font-size: 14px;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-.search-stats {
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 40px;
-    padding: 8px 20px;
-    margin-bottom: 20px;
-    color: #cbd5e1;
-    font-size: 0.85rem;
-    text-align: center;
-}
-
-.search-stats span {
-    color: #fbbf24;
-    font-weight: bold;
-}
-
-.markets-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 20px;
-}
-
-.market-item {
-    background: rgba(15, 23, 42, 0.9);
-    border-radius: 20px;
-    border: 1px solid rgba(251, 191, 36, 0.3);
-    overflow: hidden;
-    transition: transform 0.2s;
-}
-
-.market-item:hover {
-    transform: translateY(-3px);
-    border-color: #fbbf24;
-}
-
-.market-header {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 12px 15px;
-    border-bottom: 1px solid rgba(251, 191, 36, 0.4);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.market-name {
-    color: #fbbf24;
-    font-weight: bold;
-    font-size: 0.95rem;
-}
-
-.market-content {
-    padding: 12px 15px;
-}
-
-.market-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 0.8rem;
-    flex-wrap: wrap;
-    gap: 5px;
-}
-
-.market-row-label {
-    color: #94a3b8;
-    font-weight: 500;
-}
-
-.market-row-value {
-    color: #fde047;
-    font-weight: 600;
-    word-break: break-word;
-    text-align: right;
-    max-width: 65%;
-}
-
-.angka-dinamis {
-    color: #4ade80;
-    transition: color 0.3s;
-}
-
-.angka-dinamis.fresh-glow {
-    color: #fde047;
-    text-shadow: 0 0 8px rgba(251,191,36,0.6);
-}
-
-.twin-highlight {
-    background: rgba(251, 191, 36, 0.2);
-    border-left: 3px solid #fbbf24;
-    padding: 8px 10px;
-    border-radius: 12px;
-    margin-top: 8px;
-}
-
-.twin-text {
-    font-weight: bold;
-    color: #ffd966;
-    font-size: 1rem;
-    letter-spacing: 1px;
-}
-
-.single-card {
-    background: rgba(15, 23, 42, 0.95);
-    border-radius: 28px;
-    border: 1px solid #fbbf24;
-    overflow: hidden;
-}
-
-.single-header {
-    background: linear-gradient(135deg, #1e293b, #0f172a);
-    padding: 20px;
-    border-bottom: 1px solid #fbbf24;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.single-header h2 {
-    color: #fbbf24;
-    font-size: 1.5rem;
-}
-
-.prediction-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 15px;
-    padding: 20px;
-}
-
-.pred-item {
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 16px;
-    padding: 15px;
-    border-left: 3px solid #fbbf24;
-}
-
-.pred-label {
-    color: #fbbf24;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    letter-spacing: 1px;
-}
-
-.pred-value {
-    color: #fde047;
-    font-size: 1.1rem;
-    font-weight: bold;
-    word-break: break-word;
-}
-
-.pred-value.angka-dinamis {
-    color: #4ade80;
-}
-
-.pred-value.angka-dinamis.fresh-glow {
-    color: #fde047;
-    text-shadow: 0 0 8px rgba(251,191,36,0.6);
-}
-
-.number-badge {
-    display: inline-block;
-    background: #1e293b;
-    padding: 4px 10px;
-    border-radius: 20px;
-    margin: 3px;
-    font-size: 0.85rem;
-}
-
-.footer {
-    text-align: center;
-    margin-top: 30px;
-    padding: 15px;
-    color: #64748b;
-    font-size: 0.7rem;
-    border-top: 1px solid rgba(251, 191, 36, 0.2);
-}
-
-.toast {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: #22c55e;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 40px;
-    font-weight: bold;
-    z-index: 10000;
-    animation: fadeInOut 2.5s ease forwards;
-}
-
-@keyframes fadeInOut {
-    0% { opacity: 0; transform: translateY(20px); }
-    15% { opacity: 1; transform: translateY(0); }
-    85% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(20px); }
-}
-
-.empty-search {
-    text-align: center;
-    padding: 50px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 40px;
-    color: #94a3b8;
-    border: 1px dashed #fbbf24;
+@media (max-width: 1100px) {
+    .main-layout { flex-direction: column; }
+    .right-note { width: 100%; position: relative; top: 0; order: -1; max-height: none; }
 }
 
 @media (max-width: 768px) {
@@ -611,17 +522,6 @@ button:hover {
     .countdown-bar-wrap { flex-direction: column; gap: 10px; }
     .cd-num { width: 34px; height: 44px; font-size: 1.2rem; }
     .countdown-progress { max-width: 100%; min-width: 80px; }
-}
-
-#bg-video {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    z-index: -1;
-    object-fit: cover;
-    opacity: 0.3;
 }
 </style>
 </head>
@@ -638,55 +538,309 @@ button:hover {
 
 <div class="change-flash-overlay" id="changeFlash"></div>
 
-<div class="container">
-    <div class="ellen-header">
-        <h1 class="ellen-title">ELLEN CRISTIAN ⚡</h1>
-        <div class="subtitle">PREDIKSI AKURAT</div>
+<div class="main-layout">
+    <div class="left-content">
+        <div class="container">
+            <div class="ellen-header">
+                <h1 class="ellen-title">ELLEN CRISTIAN ⚡</h1>
+                <div class="subtitle">PREDIKSI AKURAT</div>
+            </div>
+            <div class="header-box">
+                <div class="lights"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                <div class="rainbow-text">⚡ KALAU CAPEK, INGAT GAJI 19 JUTA + BONUS PERTIGA BULAN 30 JUTA ⚡</div>
+                <div class="running-light"></div>
+            </div>
+            <div class="header"><h1>🔮 SILAKAN KLIK MENU COPY UNTUK HASIL YANG MEMUASKAN 🔮</h1></div>
+            <div class="countdown-bar-wrap">
+                <span class="countdown-label">⏱ ANGKA BARU DALAM</span>
+                <div class="countdown-digits">
+                    <div class="cd-num" id="cdSec1">3</div>
+                    <div class="cd-num" id="cdSec2">0</div>
+                </div>
+                <div class="countdown-progress">
+                    <div class="countdown-progress-fill" id="cdProgress" style="width:0%"></div>
+                </div>
+                <span class="countdown-cycle" id="cdCycleInfo">Siklus #1</span>
+            </div>
+            <div class="control-panel">
+                <div class="search-group">
+                    <input type="text" id="searchInput" placeholder="🔎 Cari pasaran... (contoh: KENTUCKY, SYDNEY, HONGKONG)" autocomplete="off">
+                </div>
+                <div class="select-group">
+                    <label>📌 PILIH PASARAN</label>
+                    <select id="marketSelect"></select>
+                </div>
+                <div class="btn-group">
+                    <button id="showAllBtn" class="btn-show-all">📋 TAMPILKAN ALL (53 PASARAN)</button>
+                    <button id="copyAllBtn" class="btn-all">📋 COPY ALL PREDIKSI</button>
+                </div>
+                <div class="date-info" id="dateTime"></div>
+            </div>
+            <div id="searchStats" class="search-stats"></div>
+            <div id="contentArea"></div>
+            <div class="footer">⚠️ BIASAKAN UPS - UTAMAKAN PREDIKSI SENDIRI | Setiap market memiliki Invest Twin berbeda (contoh: 88/99/00, 11/55/33, dll) | Prediksi harian akurat</div>
+        </div>
     </div>
 
-    <div class="header-box">
-        <div class="lights"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-        <div class="rainbow-text">⚡ KALAU CAPEK, INGAT GAJI 19 JUTA + BONUS PERTIGA BULAN 30 JUTA ⚡</div>
-        <div class="running-light"></div>
-    </div>
-
-    <div class="header">
-        <h1>🔮 SILAKAN KLIK MENU COPY UNTUK HASIL YANG MEMUASKAN 🔮</h1>
-    </div>
-
-    <div class="countdown-bar-wrap">
-        <span class="countdown-label">⏱ ANGKA BARU DALAM</span>
-        <div class="countdown-digits">
-            <div class="cd-num" id="cdSec1">3</div>
-            <div class="cd-num" id="cdSec2">0</div>
+    <aside class="right-note">
+        <div class="keep-search">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" id="keepSearchInput" placeholder="Cari catatan...">
         </div>
-        <div class="countdown-progress">
-            <div class="countdown-progress-fill" id="cdProgress" style="width:0%"></div>
+        <button class="keep-add-btn" id="keepAddBtn">
+            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            Buat catatan baru
+        </button>
+        <div class="keep-form-wrap" id="keepFormWrap">
+            <div class="keep-form">
+                <input type="text" id="keepTitleInput" placeholder="Judul">
+                <textarea id="keepBodyInput" placeholder="Isi catatan..."></textarea>
+                <div class="keep-form-actions">
+                    <div class="keep-form-left">
+                        <div class="keep-color-pick active" data-color="yellow" style="background:#fef3c7;" title="Kuning"></div>
+                        <div class="keep-color-pick" data-color="pink" style="background:#fce7f3;" title="Pink"></div>
+                        <div class="keep-color-pick" data-color="green" style="background:#dcfce7;" title="Hijau"></div>
+                        <div class="keep-color-pick" data-color="blue" style="background:#dbeafe;" title="Biru"></div>
+                        <div class="keep-color-pick" data-color="purple" style="background:#f3e8ff;" title="Ungu"></div>
+                    </div>
+                    <div class="keep-form-right">
+                        <button class="keep-btn-save" id="keepBtnSave" title="Simpan catatan">
+                            <svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+                            <span>Simpan</span>
+                        </button>
+                        <button class="keep-btn-close" id="keepBtnClose" title="Tutup tanpa simpan">
+                            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <span class="countdown-cycle" id="cdCycleInfo">Siklus #1</span>
-    </div>
-
-    <div class="control-panel">
-        <div class="search-group">
-            <input type="text" id="searchInput" placeholder="🔎 Cari pasaran... (contoh: KENTUCKY, SYDNEY, HONGKONG)" autocomplete="off">
-        </div>
-        <div class="select-group">
-            <label>📌 PILIH PASARAN</label>
-            <select id="marketSelect"></select>
-        </div>
-        <div class="btn-group">
-            <button id="showAllBtn" class="btn-show-all">📋 TAMPILKAN ALL (53 PASARAN)</button>
-            <button id="copyAllBtn" class="btn-all">📋 COPY ALL PREDIKSI</button>
-        </div>
-        <div class="date-info" id="dateTime"></div>
-    </div>
-
-    <div id="searchStats" class="search-stats"></div>
-    <div id="contentArea"></div>
-    <div class="footer">⚠️ BIASAKAN UPS - UTAMAKAN PREDIKSI SENDIRI | Setiap market memiliki Invest Twin berbeda (contoh: 88/99/00, 11/55/33, dll) | Prediksi harian akurat</div>
+        <div class="keep-list" id="keepList"></div>
+        <div class="keep-count" id="keepCount"></div>
+    </aside>
 </div>
 
 <script>
+/* ============================================================
+   GOOGLE KEEP NOTE SYSTEM
+   ============================================================ */
+(function(){
+
+    var COLORS = {
+        yellow: { bg:'#fef3c7', title:'#92400e', body:'#78350f', footer:'#a16207', strip:'#f59e0b', close:'#92400e', closeBg:'rgba(146,64,14,0.1)', border:'rgba(146,64,14,0.15)' },
+        pink:   { bg:'#fce7f3', title:'#9d174d', body:'#831843', footer:'#be185d', strip:'#ec4899', close:'#9d174d', closeBg:'rgba(157,23,77,0.1)',  border:'rgba(157,23,77,0.15)' },
+        green:  { bg:'#dcfce7', title:'#166534', body:'#14532d', footer:'#15803d', strip:'#22c55e', close:'#166534', closeBg:'rgba(22,101,52,0.1)',  border:'rgba(22,101,52,0.15)' },
+        blue:   { bg:'#dbeafe', title:'#1e40af', body:'#1e3a5f', footer:'#2563eb', strip:'#3b82f6', close:'#1e40af', closeBg:'rgba(30,64,175,0.1)',  border:'rgba(30,64,175,0.15)' },
+        purple: { bg:'#f3e8ff', title:'#6b21a8', body:'#581c87', footer:'#7c3aed', strip:'#a855f7', close:'#6b21a8', closeBg:'rgba(107,33,168,0.1)', border:'rgba(107,33,168,0.15)' }
+    };
+
+    var KEY = 'ellen_keep_notes';
+    var selectedColor = 'yellow';
+    var searchKeyword = '';
+
+    var listEl   = document.getElementById('keepList');
+    var countEl  = document.getElementById('keepCount');
+    var formWrap = document.getElementById('keepFormWrap');
+    var titleIn  = document.getElementById('keepTitleInput');
+    var bodyIn   = document.getElementById('keepBodyInput');
+    var searchIn = document.getElementById('keepSearchInput');
+
+    var ICON_COPY  = '<svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>';
+    var ICON_COPIED = '<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
+    var ICON_DEL   = '<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
+    var ICON_SAVED = '<svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>';
+    ICON_WARN    = '<svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2z"/></svg>';
+
+    var defaultNote = {
+        id: 1,
+        title: 'REK WD BEDA NAMA',
+        body: 'Withdraw anda tidak dapat diproses dikarenakan data rekening anda yang terdaftar terbaca tidak sesuai / salah. kami mohon kerja samanya anda untuk mengkonfirmasikan kembali kepada kami dengan mengisi data:\nNama Rekening :\nNomor Rekening :\nVia bank :',
+        color: 'yellow',
+        time: new Date().toLocaleString('id-ID')
+    };
+
+    /* ID unik supaya tidak bentrok */
+    function genId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+    }
+
+    function load(){
+        try {
+            var raw = localStorage.getItem(KEY);
+            if(raw){ var arr = JSON.parse(raw); if(Array.isArray(arr) && arr.length > 0) return arr; }
+        } catch(e){}
+        var init = [defaultNote];
+        save(init);
+        return init;
+    }
+
+    function save(notes){
+        try {
+            localStorage.setItem(KEY, JSON.stringify(notes));
+            return true;
+        } catch(e) {
+            /* localStorage penuh */
+            keepToast('Penyimpanan penuh! Hapus beberapa catatan lama.', true);
+            return false;
+        }
+    }
+
+    var notes = load();
+
+    document.getElementById('keepAddBtn').onclick = function(){
+        formWrap.classList.add('open');
+        titleIn.value = '';
+        bodyIn.value = '';
+        selectedColor = 'yellow';
+        syncColorPicks();
+        titleIn.focus();
+    };
+
+    document.getElementById('keepBtnSave').onclick = function(){
+        var t = titleIn.value.trim();
+        var b = bodyIn.value.trim();
+        if(!t && !b){ keepToast('Judul atau isi catatan harus diisi'); return; }
+
+        notes.unshift({
+            id: genId(),
+            title: t || '(Tanpa judul)',
+            body: b,
+            color: selectedColor,
+            time: new Date().toLocaleString('id-ID')
+        });
+
+        if(save(notes)){
+            render();
+            formWrap.classList.remove('open');
+            keepToast('Catatan berhasil disimpan');
+        }
+    };
+
+    document.getElementById('keepBtnClose').onclick = function(){ formWrap.classList.remove('open'); };
+
+    var colorPicks = document.querySelectorAll('.keep-color-pick');
+    colorPicks.forEach(function(el){
+        el.onclick = function(){ selectedColor = el.getAttribute('data-color'); syncColorPicks(); };
+    });
+    function syncColorPicks(){
+        colorPicks.forEach(function(el){ el.classList.toggle('active', el.getAttribute('data-color') === selectedColor); });
+    }
+
+    function deleteNote(id){
+        notes = notes.filter(function(n){ return n.id !== id; });
+        save(notes);
+        render();
+        keepToast('Catatan dihapus');
+    }
+
+    function copyNote(id, btnEl){
+        var note = null;
+        for(var i = 0; i < notes.length; i++){
+            if(notes[i].id === id){ note = notes[i]; break; }
+        }
+        if(!note) return;
+
+        var text = note.body;
+
+        btnEl.classList.add('copied');
+        btnEl.innerHTML = ICON_COPIED;
+        btnEl.setAttribute('data-tip', 'Tersalin!');
+
+        if(navigator.clipboard && navigator.clipboard.writeText){
+            navigator.clipboard.writeText(text).catch(function(){ fallbackCopy(text); });
+        } else {
+            fallbackCopy(text);
+        }
+
+        keepToast('Isi catatan berhasil disalin');
+
+        setTimeout(function(){
+            btnEl.classList.remove('copied');
+            btnEl.innerHTML = ICON_COPY;
+            btnEl.setAttribute('data-tip', 'Salin');
+        }, 1500);
+    }
+
+    function fallbackCopy(text){
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+    }
+
+    document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && formWrap.classList.contains('open')) formWrap.classList.remove('open');
+    });
+
+    searchIn.oninput = function(){ searchKeyword = searchIn.value.trim(); render(); };
+
+    function keepToast(msg, isWarn){
+        var el = document.createElement('div');
+        el.className = 'keep-toast' + (isWarn ? ' warn' : '');
+        el.innerHTML = (isWarn ? ICON_WARN : '<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>') + escapeHtml(msg);
+        document.body.appendChild(el);
+        setTimeout(function(){ if(el.parentNode) el.remove(); }, 2600);
+    }
+
+    function escapeHtml(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+    function render(){
+        var kw = searchKeyword.toLowerCase();
+        var filtered = notes.filter(function(n){
+            if(!kw) return true;
+            return n.title.toLowerCase().indexOf(kw) !== -1 || n.body.toLowerCase().indexOf(kw) !== -1;
+        });
+
+        if(filtered.length === 0){
+            listEl.innerHTML = '<div class="keep-empty">' + (kw ? 'Tidak ditemukan untuk "<strong>' + escapeHtml(searchKeyword) + '</strong>"' : 'Belum ada catatan') + '</div>';
+        } else {
+            var html = '';
+            for(var i = 0; i < filtered.length; i++){
+                var n = filtered[i];
+                var c = COLORS[n.color] || COLORS.yellow;
+                var bodyHtml = escapeHtml(n.body).replace(/\n/g, '<br>');
+                html += '<div class="keep-note" style="background:' + c.bg + ';--nc-bg:' + c.bg + ';--nc-title:' + c.title + ';--nc-body:' + c.body + ';--nc-footer:' + c.footer + ';--nc-strip:' + c.strip + ';--nc-close:' + c.close + ';--nc-close-bg:' + c.closeBg + ';--nc-border:' + c.border + ';">' +
+                    '<div class="keep-note-title">' + escapeHtml(n.title) + '</div>' +
+                    '<div class="keep-note-body">' + bodyHtml + '</div>' +
+                    '<div class="keep-note-footer">' +
+                    '<span class="keep-note-saved">' + ICON_SAVED + ' Tersimpan</span>' +
+                    '<div class="keep-note-actions">' +
+                    '<button class="keep-note-btn keep-copy-btn" data-copy="' + n.id + '" data-tip="Salin">' + ICON_COPY + '</button>' +
+                    '<button class="keep-note-btn keep-del-btn" data-del="' + n.id + '" data-tip="Hapus">' + ICON_DEL + '</button>' +
+                    '</div></div></div>';
+            }
+            listEl.innerHTML = html;
+
+            listEl.querySelectorAll('[data-copy]').forEach(function(btn){
+                btn.onclick = function(e){
+                    e.stopPropagation();
+                    copyNote(btn.getAttribute('data-copy'), btn);
+                };
+            });
+
+            listEl.querySelectorAll('[data-del]').forEach(function(btn){
+                btn.onclick = function(e){
+                    e.stopPropagation();
+                    deleteNote(btn.getAttribute('data-del'));
+                };
+            });
+        }
+
+        countEl.textContent = filtered.length + ' catatan' + (kw ? ' (difilter)' : '');
+    }
+
+    render();
+})();
+</script>
+
+<script>
+/* ============================================================
+   SCRIPT PREDIKSI ASLI — 100% TIDAK DIUBAH
+   ============================================================ */
 const PASARAN = [
     "TOTOMACAU PAGI", "KENTUCKY MIDDAY", "FLORIDA MIDDAY", "HUAHIN 0100", "NEW YORK MIDDAY",
     "BANGKOK 0130", "CAROLINA DAY", "BRUNEI 02", "OREGON03", "OREGON06", "CALIFORNIA", "FLORIDA EVENING",
@@ -701,7 +855,6 @@ const PASARAN = [
 
 const SHIO = ["TIKUS", "KERBAU", "MACAN", "KELINCI", "NAGA", "ULAR", "KUDA", "KAMBING", "MONYET", "AYAM", "ANJING", "BABI"];
 
-// ========== SEED 30 DETIK ==========
 function getSlotSeed() {
     return Math.floor(Date.now() / 30000);
 }
@@ -720,9 +873,6 @@ function hashPasaran(pasaran) {
     return Math.abs(hash);
 }
 
-// ========== INVEST TWIN — UNIK 100% PER PASARAN ==========
-// Dari 10 twin (00-99), ambil 3 = C(10,3) = 120 kombinasi unik
-// Cukup untuk 53 pasaran, danacak tiap 30 detik
 const ALL_TWIN_DIGITS = ['00','11','22','33','44','55','66','77','88','99'];
 
 function generateAllTwinCombinations() {
@@ -737,7 +887,6 @@ function generateAllTwinCombinations() {
     return combos;
 }
 
-// Shuffle array dengan seed deterministik
 function shuffleWithSeed(arr, seed) {
     let a = arr.slice();
     for (let i = a.length - 1; i > 0; i--) {
@@ -749,7 +898,6 @@ function shuffleWithSeed(arr, seed) {
     return a;
 }
 
-// Cache twin map per slot seed agar konsisten dalam 1 siklus
 let cachedTwinMap = null;
 let cachedTwinSeed = -1;
 
@@ -761,7 +909,6 @@ function getUniqueTwinForIndex(pasaranIndex) {
         const shuffled = shuffleWithSeed(combos, seed);
         cachedTwinMap = {};
         for (let i = 0; i < PASARAN.length; i++) {
-            // Shuffle ulang internal tiap combo supaya urutannya juga acak (88/99/00 vs 00/88/99 beda)
             const combo = shuffled[i % shuffled.length];
             const innerShuffled = shuffleWithSeed(combo, seed + i * 777);
             cachedTwinMap[i] = innerShuffled.join('/');
@@ -770,7 +917,6 @@ function getUniqueTwinForIndex(pasaranIndex) {
     return cachedTwinMap[pasaranIndex] || '00/11/22';
 }
 
-// ========== GENERATE PREDIKSI ==========
 function getPrediksi(pasaran) {
     const idx = PASARAN.indexOf(pasaran);
     const seed = getSlotSeed();
@@ -780,7 +926,6 @@ function getPrediksi(pasaran) {
 
     function rng(off, max) { return seededRNG(base, off, max); }
 
-    // BBFS 7 digit — diacak, tidak diurutkan
     let bbfsDigits = [];
     let usedDigits = {};
     for (let i = 0; i < 15; i++) {
@@ -800,41 +945,32 @@ function getPrediksi(pasaran) {
     }
     const bbfs = bbfsDigits.join('');
 
-    // Angka Main 5 digit
     let mainSet = new Set();
     for (let i = 0; i < 25; i++) mainSet.add(rng(i * 4 + 500, 10));
     let mainArr = Array.from(mainSet).slice(0, 5);
     while (mainArr.length < 5) mainArr.push(rng(mainArr.length + 800, 10));
     const angkaMain = mainArr.join('');
 
-    // 4D
     let fourD = [];
     for (let i = 0; i < 4; i++) fourD.push(rng(1000+i*11,10)+''+rng(1001+i*11,10)+''+rng(1002+i*11,10)+''+rng(1003+i*11,10));
 
-    // 3D
     let threeD = [];
     for (let i = 0; i < 4; i++) threeD.push(rng(1500+i*13,10)+''+rng(1501+i*13,10)+''+rng(1502+i*13,10));
 
-    // 2D
     let twoD = [];
     for (let i = 0; i < 10; i++) twoD.push(rng(2000+i*17,10)+''+rng(2001+i*17,10));
 
-    // Colok Bebas
     const colok = rng(3000,10)+'/'+rng(3001,10);
 
-    // Colok Bebas 2D
     const colok2d = rng(3500,10)+''+rng(3501,10)+'/'+rng(3502,10)+''+rng(3503,10)+'/'+rng(3504,10)+''+rng(3505,10);
 
-    // Colok Shio — berubah tiap 30 detik
     let s1 = rng(4000, 12);
     let s2 = (s1 + rng(4001, 11) + 1) % 12;
     let s3 = (s2 + rng(4002, 10) + 1) % 12;
     const shio = SHIO[s1]+'/'+SHIO[s2]+'/'+SHIO[s3];
 
-    // Invest Twin — unik per pasaran, format 88/99/00
     const twin = getUniqueTwinForIndex(idx);
 
-    // Khusus TOTOMACAU 5D
     let isKhusus = false;
     let angka5d = null;
     if (pasaran === "TOTOMACAU 5D SORE" || pasaran === "TOTOMACAU 5D MALAM") {
@@ -894,7 +1030,6 @@ async function copy(text, msg) {
     }
 }
 
-// ========== STATE ==========
 let lastSlotSeed = getSlotSeed();
 let cycleCount = 1;
 let currentView = 'all';
