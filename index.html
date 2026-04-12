@@ -467,12 +467,14 @@ body {
 .select-group { display: flex; align-items: center; gap: 15px; }
 .select-group label { color: #fbbf24; font-weight: 600; }
 select { background: #0f172a; border: 1px solid #fbbf24; padding: 10px 20px; border-radius: 40px; color: white; font-size: 14px; cursor: pointer; min-width: 220px; }
-.btn-group { display: flex; gap: 10px; }
+.btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
 
 button { background: linear-gradient(135deg, #fbbf24, #f59e0b); border: none; padding: 10px 20px; border-radius: 40px; font-weight: bold; cursor: pointer; transition: all 0.3s; font-size: 14px; }
 button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191, 36, 0.4); }
 .btn-all { background: linear-gradient(135deg, #3b82f6, #1e40af); color: white; }
 .btn-show-all { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+.btn-half1 { background: linear-gradient(135deg, #f97316, #ea580c); color: white; }
+.btn-half2 { background: linear-gradient(135deg, #a855f7, #7c3aed); color: white; }
 .date-info { background: linear-gradient(135deg, #1e293b, #0f172a); padding: 8px 16px; border-radius: 40px; color: #fbbf24; font-size: 14px; font-weight: 600; white-space: nowrap; }
 .search-stats { background: rgba(0, 0, 0, 0.5); border-radius: 40px; padding: 8px 20px; margin-bottom: 20px; color: #cbd5e1; font-size: 0.85rem; text-align: center; }
 .search-stats span { color: #fbbf24; font-weight: bold; }
@@ -522,6 +524,7 @@ button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191
     .countdown-bar-wrap { flex-direction: column; gap: 10px; }
     .cd-num { width: 34px; height: 44px; font-size: 1.2rem; }
     .countdown-progress { max-width: 100%; min-width: 80px; }
+    .btn-group { justify-content: center; }
 }
 </style>
 </head>
@@ -571,8 +574,10 @@ button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191
                     <select id="marketSelect"></select>
                 </div>
                 <div class="btn-group">
-                    <button id="showAllBtn" class="btn-show-all">📋 TAMPILKAN ALL (53 PASARAN)</button>
-                    <button id="copyAllBtn" class="btn-all">📋 COPY ALL PREDIKSI</button>
+                    <button id="showAllBtn" class="btn-show-all">📋 TAMPILKAN ALL</button>
+                    <button id="copyHalf1Btn" class="btn-half1">✂️ COPY 1 (27 PASARAN)</button>
+                    <button id="copyHalf2Btn" class="btn-half2">✂️ COPY 2 (26 PASARAN)</button>
+                    <button id="copyAllBtn" class="btn-all">📋 COPY ALL (53)</button>
                 </div>
                 <div class="date-info" id="dateTime"></div>
             </div>
@@ -622,7 +627,7 @@ button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191
 
 <script>
 /* ============================================================
-   GOOGLE KEEP NOTE SYSTEM
+   GOOGLE KEEP NOTE SYSTEM — DENGAN MENU EDIT
    ============================================================ */
 (function(){
 
@@ -637,6 +642,7 @@ button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191
     var KEY = 'ellen_keep_notes';
     var selectedColor = 'yellow';
     var searchKeyword = '';
+    var editingId = null;
 
     var listEl   = document.getElementById('keepList');
     var countEl  = document.getElementById('keepCount');
@@ -644,10 +650,12 @@ button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191
     var titleIn  = document.getElementById('keepTitleInput');
     var bodyIn   = document.getElementById('keepBodyInput');
     var searchIn = document.getElementById('keepSearchInput');
+    var saveSpan = document.querySelector('#keepBtnSave span');
 
     var ICON_COPY  = '<svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>';
     var ICON_COPIED = '<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
     var ICON_DEL   = '<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
+    var ICON_EDIT  = '<svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 000-1.41l-2.34-2.34a.996.996 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>';
     var ICON_SAVED = '<svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>';
     ICON_WARN    = '<svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2z"/></svg>';
 
@@ -659,7 +667,6 @@ button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191
         time: new Date().toLocaleString('id-ID')
     };
 
-    /* ID unik supaya tidak bentrok */
     function genId() {
         return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
     }
@@ -679,7 +686,6 @@ button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191
             localStorage.setItem(KEY, JSON.stringify(notes));
             return true;
         } catch(e) {
-            /* localStorage penuh */
             keepToast('Penyimpanan penuh! Hapus beberapa catatan lama.', true);
             return false;
         }
@@ -687,7 +693,13 @@ button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191
 
     var notes = load();
 
+    function resetFormMode() {
+        editingId = null;
+        saveSpan.textContent = 'Simpan';
+    }
+
     document.getElementById('keepAddBtn').onclick = function(){
+        resetFormMode();
         formWrap.classList.add('open');
         titleIn.value = '';
         bodyIn.value = '';
@@ -701,22 +713,42 @@ button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191
         var b = bodyIn.value.trim();
         if(!t && !b){ keepToast('Judul atau isi catatan harus diisi'); return; }
 
-        notes.unshift({
-            id: genId(),
-            title: t || '(Tanpa judul)',
-            body: b,
-            color: selectedColor,
-            time: new Date().toLocaleString('id-ID')
-        });
-
-        if(save(notes)){
-            render();
-            formWrap.classList.remove('open');
-            keepToast('Catatan berhasil disimpan');
+        if (editingId) {
+            for (var i = 0; i < notes.length; i++) {
+                if (notes[i].id === editingId) {
+                    notes[i].title = t || '(Tanpa judul)';
+                    notes[i].body = b;
+                    notes[i].color = selectedColor;
+                    notes[i].time = new Date().toLocaleString('id-ID') + ' (diedit)';
+                    break;
+                }
+            }
+            if (save(notes)) {
+                render();
+                formWrap.classList.remove('open');
+                resetFormMode();
+                keepToast('Catatan berhasil diperbarui');
+            }
+        } else {
+            notes.unshift({
+                id: genId(),
+                title: t || '(Tanpa judul)',
+                body: b,
+                color: selectedColor,
+                time: new Date().toLocaleString('id-ID')
+            });
+            if (save(notes)) {
+                render();
+                formWrap.classList.remove('open');
+                keepToast('Catatan berhasil disimpan');
+            }
         }
     };
 
-    document.getElementById('keepBtnClose').onclick = function(){ formWrap.classList.remove('open'); };
+    document.getElementById('keepBtnClose').onclick = function(){
+        resetFormMode();
+        formWrap.classList.remove('open');
+    };
 
     var colorPicks = document.querySelectorAll('.keep-color-pick');
     colorPicks.forEach(function(el){
@@ -729,8 +761,25 @@ button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191
     function deleteNote(id){
         notes = notes.filter(function(n){ return n.id !== id; });
         save(notes);
+        if (editingId === id) resetFormMode();
         render();
         keepToast('Catatan dihapus');
+    }
+
+    function editNote(id){
+        var note = null;
+        for (var i = 0; i < notes.length; i++) {
+            if (notes[i].id === id) { note = notes[i]; break; }
+        }
+        if (!note) return;
+        editingId = id;
+        titleIn.value = note.title;
+        bodyIn.value = note.body;
+        selectedColor = note.color;
+        syncColorPicks();
+        saveSpan.textContent = 'Perbarui';
+        formWrap.classList.add('open');
+        titleIn.focus();
     }
 
     function copyNote(id, btnEl){
@@ -773,7 +822,10 @@ button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191
     }
 
     document.addEventListener('keydown', function(e){
-        if(e.key === 'Escape' && formWrap.classList.contains('open')) formWrap.classList.remove('open');
+        if(e.key === 'Escape' && formWrap.classList.contains('open')){
+            resetFormMode();
+            formWrap.classList.remove('open');
+        }
     });
 
     searchIn.oninput = function(){ searchKeyword = searchIn.value.trim(); render(); };
@@ -809,11 +861,19 @@ button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191
                     '<div class="keep-note-footer">' +
                     '<span class="keep-note-saved">' + ICON_SAVED + ' Tersimpan</span>' +
                     '<div class="keep-note-actions">' +
+                    '<button class="keep-note-btn keep-edit-btn" data-edit="' + n.id + '" data-tip="Edit">' + ICON_EDIT + '</button>' +
                     '<button class="keep-note-btn keep-copy-btn" data-copy="' + n.id + '" data-tip="Salin">' + ICON_COPY + '</button>' +
                     '<button class="keep-note-btn keep-del-btn" data-del="' + n.id + '" data-tip="Hapus">' + ICON_DEL + '</button>' +
                     '</div></div></div>';
             }
             listEl.innerHTML = html;
+
+            listEl.querySelectorAll('[data-edit]').forEach(function(btn){
+                btn.onclick = function(e){
+                    e.stopPropagation();
+                    editNote(btn.getAttribute('data-edit'));
+                };
+            });
 
             listEl.querySelectorAll('[data-copy]').forEach(function(btn){
                 btn.onclick = function(e){
@@ -839,19 +899,25 @@ button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251, 191
 
 <script>
 /* ============================================================
-   SCRIPT PREDIKSI ASLI — 100% TIDAK DIUBAH
+   SCRIPT PREDIKSI — COLOK BEBAS ACAK BEDA + COPY SETENGAH
    ============================================================ */
 const PASARAN = [
     "TOTOMACAU PAGI", "KENTUCKY MIDDAY", "FLORIDA MIDDAY", "HUAHIN 0100", "NEW YORK MIDDAY",
     "BANGKOK 0130", "CAROLINA DAY", "BRUNEI 02", "OREGON03", "OREGON06", "CALIFORNIA", "FLORIDA EVENING",
     "OREGON09", "NEW YORK EVENING", "BANGKOK 0930", "KENTUCKY EVENING", "CAROLINA EVENING", "CHELSEA11",
     "TOTOCAMBODIA", "OREGON12", "BULLSEYE", "POIPET12", "TOTOMACAU SIANG", "JAKARTA4D I", "SYDNEY",
-    "BRUNEI 14", "CHELSEA15", "TOTOMACAU 5D SORE", "POIPET15", "TOTOMACAU SORE", "HUAHIN 1630",
+    "BRUNEI 14", "CHELSEA15",
+    "TOTOMACAU 5D SORE", "POIPET15", "TOTOMACAU SORE", "HUAHIN 1630",
     "KING KONG 4D I", "SINGAPORE", "MAGNUM4D", "CHELSEA19", "TOTOMACAU MALAM I", "POIPET19", "PCSO",
     "KING KONG 4D II", "HUAHIN 2100", "CHELSEA21", "TOTOMACAU 5D MALAM", "NEVADA", "BRUNEI 21",
     "TOTOMACAU MALAM II", "POIPET22", "HONGKONG", "JAKARTA4D II", "TOTOMACAU MALAM III", "TOTOMALI 1530",
     "TOTOMALI 2030", "TOTOMALI 2330", "HOKI DRAW"
 ];
+
+/* Setengah pertama: index 0-26 (27 pasaran) */
+const PASARAN_HALF1 = PASARAN.slice(0, 27);
+/* Setengah kedua: index 27-52 (26 pasaran) */
+const PASARAN_HALF2 = PASARAN.slice(27);
 
 const SHIO = ["TIKUS", "KERBAU", "MACAN", "KELINCI", "NAGA", "ULAR", "KUDA", "KAMBING", "MONYET", "AYAM", "ANJING", "BABI"];
 
@@ -960,7 +1026,11 @@ function getPrediksi(pasaran) {
     let twoD = [];
     for (let i = 0; i < 10; i++) twoD.push(rng(2000+i*17,10)+''+rng(2001+i*17,10));
 
-    const colok = rng(3000,10)+'/'+rng(3001,10);
+    /* COLOK BEBAS: 2 angka acak jauh, dijamin berbeda */
+    let c1 = rng(3000, 10);
+    let c2 = rng(8800, 9);
+    if (c2 >= c1) c2++;
+    const colok = c1+'/'+c2;
 
     const colok2d = rng(3500,10)+''+rng(3501,10)+'/'+rng(3502,10)+''+rng(3503,10)+'/'+rng(3504,10)+''+rng(3505,10);
 
@@ -1003,6 +1073,16 @@ function formatTeks(pasaran) {
     if (p.isKhusus && p.angka5d) text += '\n5D  : '+p.angka5d.join(' ');
     text += '\n4D (BB): '+p.fourD.join(' ')+'\n3D (BB) : '+p.threeD.join(' ')+'\n2D (BB): '+p.twoD.join(' ')+'\nColok Bebas : '+p.colok+'\nColok bebas 2D : '+p.colok2d+'\nColok Shio : '+p.shio+'\nInvest Twin : '+p.twin+'\nBiasakan UPS - UTAMAKAN PREDIKSI SENDIRI';
     return text;
+}
+
+/* Helper: gabungkan teks prediksi dari array pasaran */
+function buildCopyText(arr) {
+    let txt = '';
+    for (let i = 0; i < arr.length; i++) {
+        txt += formatTeks(arr[i]);
+        if (i < arr.length - 1) txt += '\n\n';
+    }
+    return txt;
 }
 
 function toast(msg) {
@@ -1246,19 +1326,26 @@ document.addEventListener('DOMContentLoaded', function(){
     };
 
     document.getElementById('searchInput').oninput = cariPasaran;
+
     document.getElementById('showAllBtn').onclick = function(){
         document.getElementById('searchInput').value = '';
         select.value = '';
         tampilkanSemua(false);
     };
 
+    /* COPY SETENGAH 1: 27 pasaran pertama */
+    document.getElementById('copyHalf1Btn').onclick = function(){
+        copy(buildCopyText(PASARAN_HALF1), 'Setengah 1 berhasil disalin (27 pasaran)!');
+    };
+
+    /* COPY SETENGAH 2: 26 pasaran kedua */
+    document.getElementById('copyHalf2Btn').onclick = function(){
+        copy(buildCopyText(PASARAN_HALF2), 'Setengah 2 berhasil disalin (26 pasaran)!');
+    };
+
+    /* COPY ALL: semua 53 pasaran */
     document.getElementById('copyAllBtn').onclick = function(){
-        let semuaTeks = '';
-        for (let i = 0; i < PASARAN.length; i++) {
-            semuaTeks += formatTeks(PASARAN[i]);
-            if (i < PASARAN.length - 1) semuaTeks += '\n\n';
-        }
-        copy(semuaTeks, 'Semua 53 pasaran berhasil disalin!');
+        copy(buildCopyText(PASARAN), 'Semua 53 pasaran berhasil disalin!');
     };
 
     updateJam();
